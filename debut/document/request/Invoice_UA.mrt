@@ -1,0 +1,1419 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="1">
+      <Document Ref="2" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+        <Alias>Document</Alias>
+        <BusinessObjects isList="true" count="3">
+          <Rows Ref="3" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+            <Alias>Rows</Alias>
+            <BusinessObjects isList="true" count="1">
+              <Entity Ref="4" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+                <Alias>Entity</Alias>
+                <BusinessObjects isList="true" count="0" />
+                <Category />
+                <Columns isList="true" count="2">
+                  <value>Name,System.String</value>
+                  <value>Article,System.String</value>
+                </Columns>
+                <Dictionary isRef="1" />
+                <Guid>c025df4a11cc478d81ac48d165aac799</Guid>
+                <Name>Entity</Name>
+              </Entity>
+            </BusinessObjects>
+            <Category />
+            <Columns isList="true" count="5">
+              <value>RowNo,System.Int32</value>
+              <value>Qty,System.Double</value>
+              <value>Price,System.Double</value>
+              <value>Sum,System.Decimal</value>
+              <value>Unit,System.String</value>
+            </Columns>
+            <Dictionary isRef="1" />
+            <Guid>747a902e8bc24f1a9e994e3b672b0458</Guid>
+            <Name>Rows</Name>
+          </Rows>
+          <Company Ref="5" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+            <Alias>Company</Alias>
+            <BusinessObjects isList="true" count="2">
+              <BankAccount Ref="6" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+                <Alias>BankAccount</Alias>
+                <BusinessObjects isList="true" count="0" />
+                <Category />
+                <Columns isList="true" count="3">
+                  <value>Account,System.String</value>
+                  <value>BankName,System.String</value>
+                  <value>BankCode,System.String</value>
+                </Columns>
+                <Dictionary isRef="1" />
+                <Guid>723b92f89c974c63a0e39eadd5e35bcf</Guid>
+                <Name>BankAccount</Name>
+              </BankAccount>
+              <Address Ref="7" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+                <Alias>Address</Alias>
+                <BusinessObjects isList="true" count="0" />
+                <Category />
+                <Columns isList="true" count="5">
+                  <value>ZIP,System.String</value>
+                  <value>City,System.String</value>
+                  <value>Street,System.String</value>
+                  <value>House,System.String</value>
+                  <value>Appartments,System.String</value>
+                </Columns>
+                <Dictionary isRef="1" />
+                <Guid>ead9f185290547eebfa7cec1a3c77b58</Guid>
+                <Name>Address</Name>
+              </Address>
+            </BusinessObjects>
+            <Category />
+            <Columns isList="true" count="3">
+              <value>Name,System.String</value>
+              <value>Code,System.String</value>
+              <value>Phone,System.String</value>
+            </Columns>
+            <Dictionary isRef="1" />
+            <Guid>645f70a75b4648d98ffb8ae42640e6a1</Guid>
+            <Name>Company</Name>
+          </Company>
+          <Agent Ref="8" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
+            <Alias>Agent</Alias>
+            <BusinessObjects isList="true" count="0" />
+            <Category />
+            <Columns isList="true" count="2">
+              <value>Name,System.String</value>
+              <value>Id,System.Int64</value>
+            </Columns>
+            <Dictionary isRef="1" />
+            <Guid>eff0dbc94b7c4ca194561ed0796a3ef3</Guid>
+            <Name>Agent</Name>
+          </Agent>
+        </BusinessObjects>
+        <Category />
+        <Columns isList="true" count="7">
+          <value>Sum,System.Decimal</value>
+          <value>VSum,System.Decimal</value>
+          <value>TSum,System.Decimal</value>
+          <value>Date,System.DateTime</value>
+          <value>Id,System.Int64</value>
+          <value>SNo,System.String</value>
+          <value>DeliverySum,System.Decimal</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <Guid>4b7db458dbc84bc99c79f6e641070be7</Guid>
+        <Name>Document</Name>
+      </Document>
+    </BusinessObjects>
+    <Databases isList="true" count="0" />
+    <DataSources isList="true" count="0" />
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Variables isList="true" count="0" />
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="9" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="6">
+        <ReportTitle Ref="10" type="ReportTitleBand" isKey="true">
+          <Border>Bottom;Transparent;2;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.4,20,1.6</ClientRectangle>
+          <Components isList="true" count="6">
+            <BarCode1 Ref="11" type="Stimulsoft.Report.BarCodes.StiBarCode" isKey="true">
+              <BackColor>Transparent</BackColor>
+              <BarCodeType Ref="12" type="Stimulsoft.Report.BarCodes.StiEAN13BarCodeType" isKey="true">
+                <Height>0.5</Height>
+                <ShowQuietZoneIndicator>False</ShowQuietZoneIndicator>
+              </BarCodeType>
+              <Border>None;[127:127:127];1;Solid;False;4;Black</Border>
+              <ClientRectangle>16.4,0,3.6,1.2</ClientRectangle>
+              <Code>{Document.Id + 290000000000}</Code>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,6,Regular,Point,False,204</Font>
+              <ForeColor>Black</ForeColor>
+              <Name>BarCode1</Name>
+              <Page isRef="9" />
+              <Parent isRef="10" />
+              <VertAlignment>Bottom</VertAlignment>
+            </BarCode1>
+            <Text22 Ref="13" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>6.6,0,4.2,0.6</ClientRectangle>
+              <ComponentStyle>Title</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,11</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text22</Name>
+              <Page isRef="9" />
+              <Parent isRef="10" />
+              <Text>РАХУНОК-ФАКТУРА №</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text22>
+            <Text23 Ref="14" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>11,0,3,0.6</ClientRectangle>
+              <ComponentStyle>TitleBold</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,11,Bold</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text23</Name>
+              <Page isRef="9" />
+              <Parent isRef="10" />
+              <Text>{Document.SNo}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text23>
+            <Text35 Ref="15" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>6.6,0.6,0.6,0.6</ClientRectangle>
+              <ComponentStyle>Label</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <Guid>a913b75360eb42208ae1e3a508974989</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text35</Name>
+              <Page isRef="9" />
+              <Parent isRef="10" />
+              <Text>від</Text>
+              <TextBrush>Gray</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text35>
+            <Text16 Ref="16" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.4,0.6,6.6,0.6</ClientRectangle>
+              <ComponentStyle>Bold</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Bold,Point,False,204</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="9" />
+              <Parent isRef="10" />
+              <Text>{DateToStrUa(Document.Date) + " р."}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="17" type="CustomFormat" isKey="true">
+                <StringFormat>dd MMMM yyyy г.</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text16>
+            <Image1 Ref="18" type="Image" isKey="true">
+              <AspectRatio>True</AspectRatio>
+              <Brush>EmptyBrush</Brush>
+              <ClientRectangle>0,0,5.2,1.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Image>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</Image>
+              <Margins>0,0,0,0</Margins>
+              <Name>Image1</Name>
+              <Page isRef="9" />
+              <Parent isRef="10" />
+              <Stretch>True</Stretch>
+            </Image1>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>ReportTitle</Name>
+          <Page isRef="9" />
+          <Parent isRef="9" />
+        </ReportTitle>
+        <DocumentTitle Ref="19" type="ReportTitleBand" isKey="true">
+          <Border>Bottom;Transparent;2;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,2.8,20,3.2</ClientRectangle>
+          <Components isList="true" count="12">
+            <Text2 Ref="20" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.2,2,17.8,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Bold,Point,False,204</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="9" />
+              <Parent isRef="19" />
+              <Text>{Document.Agent.Name}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text2>
+            <Text27 Ref="21" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,2,2,0.6</ClientRectangle>
+              <ComponentStyle>Label</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text27</Name>
+              <Page isRef="9" />
+              <Parent isRef="19" />
+              <Text>Платник:</Text>
+              <TextBrush>Gray</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text27>
+            <Text30 Ref="22" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,2,0.6</ClientRectangle>
+              <ComponentStyle>Label</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <Guid>558be807586c48199b8f0c3806a1b7a0</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text30</Name>
+              <Page isRef="9" />
+              <Parent isRef="19" />
+              <Text>Отримувач:</Text>
+              <TextBrush>Gray</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text30>
+            <Text3 Ref="23" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.2,0,17.8,0.6</ClientRectangle>
+              <ComponentStyle>Bold</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Bold,Point,False,204</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="9" />
+              <Parent isRef="19" />
+              <Text>{Document.Company.Name}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text3>
+            <Text32 Ref="24" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.2,0.6,1.6,0.4</ClientRectangle>
+              <ComponentStyle>Label</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <Guid>0c0ffa97bef7453da37d5c16339ed331</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text32</Name>
+              <Page isRef="9" />
+              <Parent isRef="19" />
+              <Text>ЄДРПОУ:</Text>
+              <TextBrush>Gray</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text32>
+            <Text20 Ref="25" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>4,0.6,2,0.4</ClientRectangle>
+              <ComponentStyle>Bold</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Bold,Point,False,204</Font>
+              <Guid>9cd1cf44f5dd482fbc4c09cd65b4e91b</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text20</Name>
+              <Page isRef="9" />
+              <Parent isRef="19" />
+              <PrintOn>OnlyFirstPage</PrintOn>
+              <Text>{Document.Company.Code}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text20>
+            <Text48 Ref="26" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>6,0.6,1.4,0.4</ClientRectangle>
+              <ComponentStyle>Label</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <Guid>4d920fe836f0440cb11edd83a5fdc723</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text48</Name>
+              <Page isRef="9" />
+              <Parent isRef="19" />
+              <PrintOn>OnlyFirstPage</PrintOn>
+              <Text>адреса:</Text>
+              <TextBrush>Gray</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text48>
+            <Text28 Ref="27" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.4,0.6,12.6,0.4</ClientRectangle>
+              <ComponentStyle>Bold</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Bold,Point,False,204</Font>
+              <Guid>bd5bbca6fcfa415da9b5a42977b7f30c</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text28</Name>
+              <Page isRef="9" />
+              <Parent isRef="19" />
+              <PrintOn>OnlyFirstPage</PrintOn>
+              <Text>{Document.Company.Address.ZIP + ", " + Document.Company.Address.City + ", " + Document.Company.Address.Street + ", " + Document.Company.Address.House + " " + Document.Company.Address.Appartments}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text28>
+            <Text47 Ref="28" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.2,1,17.8,0.4</ClientRectangle>
+              <ComponentStyle>Label</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <Guid>0e4fc9047c534fbca06496b7fd2375ac</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text47</Name>
+              <Page isRef="9" />
+              <Parent isRef="19" />
+              <PrintOn>OnlyFirstPage</PrintOn>
+              <Text>р/р &lt;font color=black&gt;&lt;b&gt;{Document.Company.BankAccount.Account}&lt;/b&gt;&lt;/font&gt; у &lt;font color=black&gt;&lt;b&gt;{Document.Company.BankAccount.BankName}&lt;/b&gt;&lt;/font&gt;, МФО &lt;font color=black&gt;&lt;b&gt;{Document.Company.BankAccount.BankCode}&lt;/b&gt;&lt;/font&gt;</Text>
+              <TextBrush>Gray</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text47>
+            <Text24 Ref="29" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.2,1.4,4.8,0.4</ClientRectangle>
+              <ComponentStyle>Label</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <Guid>2fcff62d45a244649d11f3a7be85ef00</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text24</Name>
+              <Page isRef="9" />
+              <Parent isRef="19" />
+              <Text>тел./факс (багатоканальний):</Text>
+              <TextBrush>Gray</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text24>
+            <Text25 Ref="30" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>7.2,1.4,12.8,0.4</ClientRectangle>
+              <ComponentStyle>Bold</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Bold,Point,False,204</Font>
+              <Guid>a8eb71880e3b4ed2bb4cd50144b17687</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text25</Name>
+              <Page isRef="9" />
+              <Parent isRef="19" />
+              <PrintOn>OnlyFirstPage</PrintOn>
+              <Text>{Document.Company.Phone}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text25>
+            <Text21 Ref="31" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14,2.6,6,0.4</ClientRectangle>
+              <ComponentStyle>Label</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <Guid>a6c8486637bb49959a4e524569da22ea</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text21</Name>
+              <Page isRef="9" />
+              <Parent isRef="19" />
+              <Text>Сплатити до: {DateToStrUa(Document.Date + TimeSpan.FromDays(3)) + " р."}
+</Text>
+              <TextBrush>Gray</TextBrush>
+              <TextFormat Ref="32" type="CustomFormat" isKey="true">
+                <StringFormat>dd MMMM yyyy г.</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Bottom</VertAlignment>
+            </Text21>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>DocumentTitle</Name>
+          <Page isRef="9" />
+          <Parent isRef="9" />
+        </DocumentTitle>
+        <DetailsHeader Ref="33" type="HeaderBand" isKey="true">
+          <Border>None;[127:127:127];2;None;False;4;Black</Border>
+          <Brush>EmptyBrush</Brush>
+          <CanShrink>True</CanShrink>
+          <ClientRectangle>0,6.8,20,2.4</ClientRectangle>
+          <Components isList="true" count="1">
+            <Panel3 Ref="34" type="Panel" isKey="true">
+              <Border>All;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanShrink>True</CanShrink>
+              <ClientRectangle>0,0,20,1.8</ClientRectangle>
+              <Components isList="true" count="10">
+                <Text7 Ref="35" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>0.8,0.6,1.6,0.6</ClientRectangle>
+                  <ComponentStyle>TableHeader center</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text7</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="34" />
+                  <Text>Артикул</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text7>
+                <Text8 Ref="36" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>13.4,0,2,1.2</ClientRectangle>
+                  <ComponentStyle>TableHeader center</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Guid>86b34c95762741e393988dedefea0a6b</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text8</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="34" />
+                  <Text>Кількість</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text8>
+                <Text11 Ref="37" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>15.4,0,2.2,1.2</ClientRectangle>
+                  <ComponentStyle>TableHeader center</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Guid>f800a28725c843f99652a9577202aef3</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text11</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="34" />
+                  <Text>Ціна
+(без ПДВ)</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text11>
+                <Text12 Ref="38" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>17.6,0,2.4,1.2</ClientRectangle>
+                  <ComponentStyle>TableHeader center</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Guid>b61a72b10197411882b58f4fd31fff97</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text12</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="34" />
+                  <Text>Сума 
+(без ПДВ)</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text12>
+                <Text43 Ref="39" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>2.4,0.6,9.8,0.6</ClientRectangle>
+                  <ComponentStyle>TableHeader center</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Guid>e0fcf78229c546128144c70ce8e9c71d</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text43</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="34" />
+                  <Text>Найменування</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text43>
+                <Text29 Ref="40" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>0.8,0,12.6,0.6</ClientRectangle>
+                  <ComponentStyle>TableHeader center</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Guid>56d686bf6aee4fd1b4218e6a57520bf4</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text29</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="34" />
+                  <Text>Товар</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text29>
+                <Text4 Ref="41" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>0,0,0.8,1.2</ClientRectangle>
+                  <ComponentStyle>TableHeader center</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text4</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="34" />
+                  <Text>№ 
+з.п.</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text4>
+                <Text10 Ref="42" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>12.2,0.6,1.2,0.6</ClientRectangle>
+                  <ComponentStyle>TableHeader center</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Guid>08982d88ba274ab3bace4e91066a975c</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text10</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="34" />
+                  <Text>Од. вим.</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text10>
+                <StartPointPrimitive9 Ref="43" type="Stimulsoft.Report.Components.StiStartPointPrimitive" isKey="true">
+                  <ClientRectangle>11.6,0.4,0,0</ClientRectangle>
+                  <Name>StartPointPrimitive9</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="34" />
+                  <ReferenceToGuid>23ea00e11f934bfdb167f6d6dd2f61a1</ReferenceToGuid>
+                </StartPointPrimitive9>
+                <StartPointPrimitive3 Ref="44" type="Stimulsoft.Report.Components.StiStartPointPrimitive" isKey="true">
+                  <ClientRectangle>3.2,1.2,0,0</ClientRectangle>
+                  <Name>StartPointPrimitive3</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="34" />
+                  <ReferenceToGuid>ed8ac9d8fc6843b5826a6e118f9dc5d6</ReferenceToGuid>
+                </StartPointPrimitive3>
+              </Components>
+              <Conditions isList="true" count="0" />
+              <DockStyle>Top</DockStyle>
+              <Name>Panel3</Name>
+              <Page isRef="9" />
+              <Parent isRef="33" />
+            </Panel3>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>DetailsHeader</Name>
+          <Page isRef="9" />
+          <Parent isRef="9" />
+        </DetailsHeader>
+        <Data Ref="45" type="DataBand" isKey="true">
+          <Border>None;Gray;2;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid>747a902e8bc24f1a9e994e3b672b0458</BusinessObjectGuid>
+          <CanBreak>True</CanBreak>
+          <CanShrink>True</CanShrink>
+          <ClientRectangle>0,10,20,0.6</ClientRectangle>
+          <Components isList="true" count="7">
+            <Text5 Ref="46" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>13.4,0,2,0.6</ClientRectangle>
+              <ComponentStyle>Normal</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>827f871fc9b04277a514d4ad068828f3</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,5,0,0</Margins>
+              <Name>Text5</Name>
+              <Page isRef="9" />
+              <Parent isRef="45" />
+              <Text>{Document.Rows.Qty}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="47" type="CustomFormat" isKey="true">
+                <StringFormat>#,##0.00##</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text5>
+            <Text6 Ref="48" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>2.4,0,9.8,0.6</ClientRectangle>
+              <ComponentStyle>Normal</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Margins>5,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="9" />
+              <Parent isRef="45" />
+              <Text>{Document.Rows.Entity.Name}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text6>
+            <Text9 Ref="49" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>12.2,0,1.2,0.6</ClientRectangle>
+              <ComponentStyle>Normal</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>c41de58136a94025b99e0c469b7cb45a</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text9</Name>
+              <Page isRef="9" />
+              <Parent isRef="45" />
+              <Text>{Document.Rows.Unit}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text9>
+            <Text13 Ref="50" type="Text" isKey="true">
+              <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>15.4,0,2.2,0.6</ClientRectangle>
+              <ComponentStyle>Normal</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>6c3bcfb1584d4bbb830ed7e5781c85ca</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,5,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="9" />
+              <Parent isRef="45" />
+              <Text>{Document.Rows.Price}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="51" type="CustomFormat" isKey="true">
+                <StringFormat>#,##0.00##</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text13>
+            <Text14 Ref="52" type="Text" isKey="true">
+              <Border>AdvGray;1;Solid;Gray;1;Solid;Gray;1;Solid;Gray;2;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>17.6,0,2.4,0.6</ClientRectangle>
+              <ComponentStyle>Normal</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>8c20366f507345faa9ad7c9d7b4983c9</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,5,0,0</Margins>
+              <Name>Text14</Name>
+              <Page isRef="9" />
+              <Parent isRef="45" />
+              <Text>{Document.Rows.Sum}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="53" type="CustomFormat" isKey="true">
+                <StringFormat>#,##0.00##</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text14>
+            <Text17 Ref="54" type="Text" isKey="true">
+              <Border>All;Gray;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0.8,0,1.6,0.6</ClientRectangle>
+              <ComponentStyle>Normal</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>3e1d6b2f4ce3446daba392b3937521e3</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text17</Name>
+              <Page isRef="9" />
+              <Parent isRef="45" />
+              <Text>{Document.Rows.Entity.Article}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text17>
+            <Text1 Ref="55" type="Text" isKey="true">
+              <Border>AdvGray;1;None;Gray;1;Solid;Gray;2;Solid;Gray;1;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>0,0,0.8,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,5,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="9" />
+              <Parent isRef="45" />
+              <Text>{Document.Rows.RowNo + 1}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text1>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataSourceName isNull="true" />
+          <Filters isList="true" count="0" />
+          <Name>Data</Name>
+          <Page isRef="9" />
+          <Parent isRef="9" />
+          <PrintIfDetailEmpty>True</PrintIfDetailEmpty>
+          <Sort isList="true" count="0" />
+        </Data>
+        <DetailsFooter Ref="56" type="FooterBand" isKey="true">
+          <Border>None;Gray;2;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <CanShrink>True</CanShrink>
+          <ClientRectangle>0,11.4,20,7.2</ClientRectangle>
+          <Components isList="true" count="2">
+            <Panel1 Ref="57" type="Panel" isKey="true">
+              <Border>All;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanShrink>True</CanShrink>
+              <ClientRectangle>0,0,20,2.8</ClientRectangle>
+              <Components isList="true" count="11">
+                <Text46 Ref="58" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>15.4,0.6,2.2,0.6</ClientRectangle>
+                  <ComponentStyle>TableHeader right</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Guid>bb61b2da23264811b424bd202715b083</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text46</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="57" />
+                  <Text>Доставка:</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text46>
+                <Text45 Ref="59" type="Text" isKey="true">
+                  <Border>All;DimGray;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>17.6,0.6,2.4,0.6</ClientRectangle>
+                  <ComponentStyle>Total Right</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,9,Bold,Point,False,204</Font>
+                  <Guid>f9a0f505679b4b2b9d93f5812179e4d7</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text45</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="57" />
+                  <Text>{Document.DeliverySum}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextFormat Ref="60" type="NumberFormat" isKey="true">
+                    <GroupSeparator>,</GroupSeparator>
+                    <GroupSize>1</GroupSize>
+                    <NegativePattern>1</NegativePattern>
+                  </TextFormat>
+                  <Type>DataColumn</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text45>
+                <Text42 Ref="61" type="Text" isKey="true">
+                  <Border>All;DimGray;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>17.6,1.8,2.4,0.6</ClientRectangle>
+                  <ComponentStyle>Total Right</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,9,Bold,Point,False,204</Font>
+                  <Guid>43761073e1a14250a02cd75f20fc9c83</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text42</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="57" />
+                  <Text>{Document.TSum}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextFormat Ref="62" type="NumberFormat" isKey="true">
+                    <GroupSeparator>,</GroupSeparator>
+                    <GroupSize>1</GroupSize>
+                    <NegativePattern>1</NegativePattern>
+                  </TextFormat>
+                  <VertAlignment>Center</VertAlignment>
+                </Text42>
+                <Text38 Ref="63" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>15.4,1.8,2.2,0.6</ClientRectangle>
+                  <ComponentStyle>TableHeader right</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Guid>4921778b15bf4a7ea8a7c051ee054bad</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text38</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="57" />
+                  <Text>До сплати:</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text38>
+                <Text44 Ref="64" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>0,0,15.4,0.6</ClientRectangle>
+                  <ComponentStyle>TableHeader left</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Margins>5,0,0,0</Margins>
+                  <Name>Text44</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="57" />
+                  <Text>Всього прописом:</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text44>
+                <Text15 Ref="65" type="Text" isKey="true">
+                  <Border>All;DimGray;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>17.6,0,2.4,0.6</ClientRectangle>
+                  <ComponentStyle>Total Right</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,9,Bold,Point,False,204</Font>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text15</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="57" />
+                  <Text>{Document.Sum}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextFormat Ref="66" type="NumberFormat" isKey="true">
+                    <GroupSeparator>,</GroupSeparator>
+                    <GroupSize>1</GroupSize>
+                    <NegativePattern>1</NegativePattern>
+                  </TextFormat>
+                  <VertAlignment>Center</VertAlignment>
+                </Text15>
+                <Text37 Ref="67" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>15.4,1.2,2.2,0.6</ClientRectangle>
+                  <ComponentStyle>TableHeader right</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Guid>6a069612f838474e9e9b4d7d901399a8</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text37</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="57" />
+                  <Text>ПДВ:</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text37>
+                <Text36 Ref="68" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>15.4,0,2.2,0.6</ClientRectangle>
+                  <ComponentStyle>TableHeader right</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Guid>6bf83867ec5841cbb368c1b75af49cc7</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text36</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="57" />
+                  <Text>Разом:</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text36>
+                <Text19 Ref="69" type="Text" isKey="true">
+                  <Border>All;DimGray;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>17.6,1.2,2.4,0.6</ClientRectangle>
+                  <ComponentStyle>Total Right</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,9,Bold,Point,False,204</Font>
+                  <Guid>e2ea6431aa7e4c12a49fdeb1b2cf164d</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text19</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="57" />
+                  <Text>{Document.VSum}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextFormat Ref="70" type="NumberFormat" isKey="true">
+                    <GroupSeparator>,</GroupSeparator>
+                    <GroupSize>1</GroupSize>
+                    <NegativePattern>1</NegativePattern>
+                  </TextFormat>
+                  <VertAlignment>Center</VertAlignment>
+                </Text19>
+                <Text18 Ref="71" type="Text" isKey="true">
+                  <Border>All;DimGray;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>0,0.6,15.4,1.8</ClientRectangle>
+                  <ComponentStyle>Total left</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,9,Bold,Point,False,204</Font>
+                  <Margins>5,0,5,0</Margins>
+                  <Name>Text18</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="57" />
+                  <Text>{ToWordsUa(Document.TSum) + " грн. " + ((Document.TSum - Decimal.Truncate(Document.TSum)) * 100).ToString("00")  + " коп."}
+</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+                  <Type>Expression</Type>
+                </Text18>
+                <EndPointPrimitive3 Ref="72" type="Stimulsoft.Report.Components.StiEndPointPrimitive" isKey="true">
+                  <ClientRectangle>3.2,0,0,0</ClientRectangle>
+                  <Name>EndPointPrimitive3</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="57" />
+                  <ReferenceToGuid>ed8ac9d8fc6843b5826a6e118f9dc5d6</ReferenceToGuid>
+                </EndPointPrimitive3>
+              </Components>
+              <Conditions isList="true" count="1">
+                <value>_x007B_Document.DeliverySum_x0020__x0021__x003D__x0020_0_x007D_,Red,Transparent,Arial_x002C_8,True,False,,,None,None</value>
+              </Conditions>
+              <DockStyle>Top</DockStyle>
+              <Enabled>False</Enabled>
+              <Name>Panel1</Name>
+              <Page isRef="9" />
+              <Parent isRef="56" />
+            </Panel1>
+            <Panel2 Ref="73" type="Panel" isKey="true">
+              <Border>All;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <CanShrink>True</CanShrink>
+              <ClientRectangle>0,2.8,20,3.2</ClientRectangle>
+              <Components isList="true" count="9">
+                <Text49 Ref="74" type="Text" isKey="true">
+                  <Border>All;DimGray;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>17.6,1.2,2.4,0.6</ClientRectangle>
+                  <ComponentStyle>Total Right</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,9,Bold,Point,False,204</Font>
+                  <Guid>8cb4597594184d00ab8cdc7ad54ae408</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text49</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="73" />
+                  <Text>{Document.TSum}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextFormat Ref="75" type="NumberFormat" isKey="true">
+                    <GroupSeparator>,</GroupSeparator>
+                    <GroupSize>1</GroupSize>
+                    <NegativePattern>1</NegativePattern>
+                  </TextFormat>
+                  <VertAlignment>Center</VertAlignment>
+                </Text49>
+                <Text50 Ref="76" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>15.4,1.2,2.2,0.6</ClientRectangle>
+                  <ComponentStyle>TableHeader right</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Guid>4d9cc27645404ed786a17bdcd5ddc577</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text50</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="73" />
+                  <Text>До сплати:</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text50>
+                <Text51 Ref="77" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>0,0,15.4,0.6</ClientRectangle>
+                  <ComponentStyle>TableHeader left</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Guid>dce9c40ca5e640668f89e26bbe8101d9</Guid>
+                  <Margins>5,0,0,0</Margins>
+                  <Name>Text51</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="73" />
+                  <Text>Всього прописом:</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text51>
+                <Text52 Ref="78" type="Text" isKey="true">
+                  <Border>All;DimGray;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>17.6,0,2.4,0.6</ClientRectangle>
+                  <ComponentStyle>Total Right</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,9,Bold,Point,False,204</Font>
+                  <Guid>5b79e46a6eb9401eb062290ca17870a5</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text52</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="73" />
+                  <Text>{Document.Sum}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextFormat Ref="79" type="NumberFormat" isKey="true">
+                    <GroupSeparator>,</GroupSeparator>
+                    <GroupSize>1</GroupSize>
+                    <NegativePattern>1</NegativePattern>
+                  </TextFormat>
+                  <VertAlignment>Center</VertAlignment>
+                </Text52>
+                <Text53 Ref="80" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>15.4,0.6,2.2,0.6</ClientRectangle>
+                  <ComponentStyle>TableHeader right</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Guid>78e7cfb09f60445eb46b051cb8c72389</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text53</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="73" />
+                  <Text>ПДВ:</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text53>
+                <Text54 Ref="81" type="Text" isKey="true">
+                  <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+                  <Brush>WhiteSmoke</Brush>
+                  <ClientRectangle>15.4,0,2.2,0.6</ClientRectangle>
+                  <ComponentStyle>TableHeader right</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,8</Font>
+                  <Guid>d1a35f67b54848388d162845a46a395d</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text54</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="73" />
+                  <Text>Разом:</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text54>
+                <Text55 Ref="82" type="Text" isKey="true">
+                  <Border>All;DimGray;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>17.6,0.6,2.4,0.6</ClientRectangle>
+                  <ComponentStyle>Total Right</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,9,Bold,Point,False,204</Font>
+                  <Guid>bfea41dd433b4c49b6afe4014c054021</Guid>
+                  <HorAlignment>Right</HorAlignment>
+                  <Margins>0,5,0,0</Margins>
+                  <Name>Text55</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="73" />
+                  <Text>{Document.VSum}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextFormat Ref="83" type="NumberFormat" isKey="true">
+                    <GroupSeparator>,</GroupSeparator>
+                    <GroupSize>1</GroupSize>
+                    <NegativePattern>1</NegativePattern>
+                  </TextFormat>
+                  <VertAlignment>Center</VertAlignment>
+                </Text55>
+                <Text56 Ref="84" type="Text" isKey="true">
+                  <Border>All;DimGray;1;Solid;False;4;Black</Border>
+                  <Brush>Transparent</Brush>
+                  <ClientRectangle>0,0.6,15.4,1.2</ClientRectangle>
+                  <ComponentStyle>Total left</ComponentStyle>
+                  <Conditions isList="true" count="0" />
+                  <Font>Segoe UI,9,Bold,Point,False,204</Font>
+                  <Guid>d48a2e9f2dd145aea095e14ec9aa2c87</Guid>
+                  <Margins>5,0,5,0</Margins>
+                  <Name>Text56</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="73" />
+                  <Text>{ToWordsUa(Document.TSum) + " грн. " + ((Document.TSum - Decimal.Truncate(Document.TSum)) * 100).ToString("00")  + " коп."}
+</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+                  <Type>Expression</Type>
+                </Text56>
+                <EndPointPrimitive1 Ref="85" type="Stimulsoft.Report.Components.StiEndPointPrimitive" isKey="true">
+                  <ClientRectangle>3.2,0,0,0</ClientRectangle>
+                  <Guid>bedb86a7b0ca42409c2a9fa44b0923fa</Guid>
+                  <Name>EndPointPrimitive1</Name>
+                  <Page isRef="9" />
+                  <Parent isRef="73" />
+                  <ReferenceToGuid>ed8ac9d8fc6843b5826a6e118f9dc5d6</ReferenceToGuid>
+                </EndPointPrimitive1>
+              </Components>
+              <Conditions isList="true" count="1">
+                <value>_x007B_Document.DeliverySum_x0020__x003D__x003D__x0020_0_x007D_,Red,Transparent,Arial_x002C_8,True,False,,,None,None</value>
+              </Conditions>
+              <DockStyle>Top</DockStyle>
+              <Enabled>False</Enabled>
+              <Guid>972c38a2a1ce44f68bfc27200b50ca4d</Guid>
+              <Name>Panel2</Name>
+              <Page isRef="9" />
+              <Parent isRef="56" />
+            </Panel2>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>DetailsFooter</Name>
+          <Page isRef="9" />
+          <Parent isRef="9" />
+        </DetailsFooter>
+        <ReportSummary Ref="86" type="ReportSummaryBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,19.4,20,3.4</ClientRectangle>
+          <Components isList="true" count="3">
+            <Text39 Ref="87" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0.2,20,1</ClientRectangle>
+              <ComponentStyle>Small</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,8.25,Regular,Point,False,204</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text39</Name>
+              <Page isRef="9" />
+              <Parent isRef="86" />
+              <Text>Шановні партнери! Для автоматичної розсилки документів просимо повідомити Вашу електронну адресу на buh@debut.ua або факсу (044) 390-03-93 (вн.710), з обов'язковою вказівкою: ЄДРПОУ, найменування підприємства</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+            </Text39>
+            <Text41 Ref="88" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,2.2,1.8,0.6</ClientRectangle>
+              <ComponentStyle>Label</ComponentStyle>
+              <Conditions isList="true" count="0" />
+              <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+              <Guid>ce2aafe253604977a4115c23d80defd2</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text41</Name>
+              <Page isRef="9" />
+              <Parent isRef="86" />
+              <Text>Виписав:</Text>
+              <TextBrush>Gray</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text41>
+            <HorizontalLinePrimitive7 Ref="89" type="HorizontalLinePrimitive" isKey="true">
+              <ClientRectangle>1.8,2.8,6.4,0.0254</ClientRectangle>
+              <Color>Gray</Color>
+              <EndCap Ref="90" type="Cap" isKey="true">
+                <Color>Black</Color>
+              </EndCap>
+              <Name>HorizontalLinePrimitive7</Name>
+              <Page isRef="9" />
+              <Parent isRef="86" />
+              <StartCap Ref="91" type="Cap" isKey="true">
+                <Color>Black</Color>
+              </StartCap>
+            </HorizontalLinePrimitive7>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Name>ReportSummary</Name>
+          <Page isRef="9" />
+          <Parent isRef="9" />
+        </ReportSummary>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Guid>f5492a9fe7e3437a80a6ae19da128751</Guid>
+      <Margins>0.5,0.5,0.5,0.5</Margins>
+      <Name>Page1</Name>
+      <PageHeight>29.7</PageHeight>
+      <PageWidth>21</PageWidth>
+      <PaperSize>A4</PaperSize>
+      <Report isRef="0" />
+      <Watermark Ref="92" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+        <Font>Arial,100</Font>
+        <TextBrush>[50:0:0:0]</TextBrush>
+      </Watermark>
+    </Page1>
+  </Pages>
+  <PrinterSettings Ref="93" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>12/19/2017 8:03:04 AM</ReportChanged>
+  <ReportCreated>2/1/2014 7:58:43 AM</ReportCreated>
+  <ReportFile>D:\a2_Projects\Debut\Debut_vX\apps\debut\document\request\Invoice_UA.mrt</ReportFile>
+  <ReportGuid>6e9e8a3e44884b5199776d74a88dcbb7</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2016.1.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+			
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="11">
+    <Normal Ref="94" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <AllowUseBorderFormatting>False</AllowUseBorderFormatting>
+      <AllowUseBorderSides>False</AllowUseBorderSides>
+      <AllowUseVertAlignment>True</AllowUseVertAlignment>
+      <Border>None;Transparent;0;None;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+      <Name>Normal</Name>
+      <TextBrush>Black</TextBrush>
+      <VertAlignment>Center</VertAlignment>
+    </Normal>
+    <Total_x0020_left Ref="95" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <AllowUseVertAlignment>True</AllowUseVertAlignment>
+      <Border>All;DimGray;1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Segoe UI,9,Bold,Point,False,204</Font>
+      <Name>Total left</Name>
+      <TextBrush>Black</TextBrush>
+    </Total_x0020_left>
+    <Title Ref="96" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <AllowUseBorderFormatting>False</AllowUseBorderFormatting>
+      <AllowUseBorderSides>False</AllowUseBorderSides>
+      <AllowUseVertAlignment>True</AllowUseVertAlignment>
+      <Brush>Transparent</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Segoe UI,11</Font>
+      <Name>Title</Name>
+      <TextBrush>Black</TextBrush>
+      <VertAlignment>Bottom</VertAlignment>
+    </Title>
+    <Label Ref="97" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Brush>Transparent</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Segoe UI,9.75,Regular,Point,False,204</Font>
+      <Name>Label</Name>
+      <TextBrush>Gray</TextBrush>
+      <VertAlignment>Center</VertAlignment>
+    </Label>
+    <Small Ref="98" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Brush>Transparent</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Segoe UI,8.25,Regular,Point,False,204</Font>
+      <Name>Small</Name>
+      <TextBrush>Black</TextBrush>
+    </Small>
+    <Bold Ref="99" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Brush>Transparent</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Segoe UI,9.75,Bold,Point,False,204</Font>
+      <Name>Bold</Name>
+      <TextBrush>Black</TextBrush>
+    </Bold>
+    <TitleBold Ref="100" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <AllowUseBorderFormatting>False</AllowUseBorderFormatting>
+      <AllowUseBorderSides>False</AllowUseBorderSides>
+      <AllowUseVertAlignment>True</AllowUseVertAlignment>
+      <Brush>Transparent</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Segoe UI,11,Bold</Font>
+      <Name>TitleBold</Name>
+      <TextBrush>Black</TextBrush>
+      <VertAlignment>Bottom</VertAlignment>
+    </TitleBold>
+    <TableHeader_x0020_left Ref="101" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <AllowUseHorAlignment>True</AllowUseHorAlignment>
+      <AllowUseVertAlignment>True</AllowUseVertAlignment>
+      <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+      <Brush>WhiteSmoke</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Segoe UI,8</Font>
+      <Name>TableHeader left</Name>
+      <TextBrush>Black</TextBrush>
+      <VertAlignment>Center</VertAlignment>
+    </TableHeader_x0020_left>
+    <TableHeader_x0020_right Ref="102" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <AllowUseHorAlignment>True</AllowUseHorAlignment>
+      <AllowUseVertAlignment>True</AllowUseVertAlignment>
+      <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+      <Brush>WhiteSmoke</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Segoe UI,8</Font>
+      <HorAlignment>Right</HorAlignment>
+      <Name>TableHeader right</Name>
+      <TextBrush>Black</TextBrush>
+      <VertAlignment>Center</VertAlignment>
+    </TableHeader_x0020_right>
+    <Total_x0020_Right Ref="103" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <AllowUseVertAlignment>True</AllowUseVertAlignment>
+      <Border>All;DimGray;1;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Segoe UI,9,Bold,Point,False,204</Font>
+      <HorAlignment>Right</HorAlignment>
+      <Name>Total Right</Name>
+      <TextBrush>Black</TextBrush>
+      <VertAlignment>Center</VertAlignment>
+    </Total_x0020_Right>
+    <TableHeader_x0020_center Ref="104" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <AllowUseHorAlignment>True</AllowUseHorAlignment>
+      <AllowUseVertAlignment>True</AllowUseVertAlignment>
+      <Border>All;Gray;1;Solid;False;4;Black;True</Border>
+      <Brush>WhiteSmoke</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Segoe UI,8</Font>
+      <HorAlignment>Center</HorAlignment>
+      <Name>TableHeader center</Name>
+      <TextBrush>Black</TextBrush>
+      <VertAlignment>Center</VertAlignment>
+    </TableHeader_x0020_center>
+  </Styles>
+</StiSerializer>

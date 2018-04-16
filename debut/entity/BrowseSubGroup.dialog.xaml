@@ -1,0 +1,32 @@
+﻿<Dialog xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml"
+      Title="Выбор подргуппы товаров" Padding="10" Size="Large"
+    >
+    <Dialog.Buttons>
+        <Button Content="Выбрать" Command="{BindCmd Select, Argument={Bind Groups.Selected(SubGroups)}}"/>
+        <Button Content="Отмена" Command="{BindCmd Close}"/>
+    </Dialog.Buttons>
+    <CollectionView ItemsSource="{Bind Groups}" RunAt="Server" Filter="Fragment">
+        <Toolbar Style="Transparent" Margin="0,0,6,0">
+            <TextBox Value="{Bind Parent.Filter.Fragment}" TabIndex="1" Width="270"
+                     Label="поиск:" Placeholder="фрагмент имени для поиска">
+                <TextBox.AddOns>
+                    <Hyperlink Icon="Search" Command="{BindCmd Reload}"/>
+                </TextBox.AddOns>                
+            </TextBox>
+        </Toolbar>
+        <Splitter>
+            <List ItemsSource="{Bind Parent.ItemsSource}" Splitter.Width="40%" 
+                  AutoSelect="FirstItem" Striped="True" Height="400">
+                <ListItem Header="{Bind Name}"/>
+            </List>
+            <DataGrid Hover="True" Striped="True"
+                  GridLines="Vertical" Height="400" FixedHeader="True"
+		          ItemsSource="{Bind Groups.Selected(SubGroups)}" DoubleClick="{BindCmd Select, Argument={Bind Groups.Selected(SubGroups)}}">
+                <DataGridColumn Content="{Bind Id}" Header="Код"/>
+                <DataGridColumn Header="Наименование" Content="{Bind Name}" />
+                <DataGridColumn Content="{Bind Memo}" Header="Примечание" />
+            </DataGrid>
+        </Splitter>
+        <Pager Source="{Bind Parent.Pager}" />
+    </CollectionView>
+</Dialog>

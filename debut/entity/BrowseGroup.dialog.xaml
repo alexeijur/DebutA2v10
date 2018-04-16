@@ -1,0 +1,26 @@
+﻿<Dialog xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml"
+      Title="Выбор группы" Padding="10"
+    >
+    <Dialog.Buttons>
+        <Button Content="Выбрать" Command="{BindCmd Select, Argument={Bind Groups}}"/>
+        <Button Content="Отмена" Command="{BindCmd Close}"/>
+    </Dialog.Buttons>
+    <CollectionView ItemsSource="{Bind Groups}" RunAt="Server" Filter="Fragment">
+        <Toolbar Style="Transparent">
+            <TextBox Value="{Bind Parent.Filter.Fragment}" TabIndex="1" Width="270"
+                     Label="поиск:" Placeholder="фрагмент имени для поиска">
+                <TextBox.AddOns>
+                    <Hyperlink Icon="Search" Command="{BindCmd Reload}"/>
+                </TextBox.AddOns>                
+            </TextBox>
+        </Toolbar>
+        <DataGrid Hover="True" Striped="True" Border="True"
+                  GridLines="Vertical" Height="400" FixedHeader="True"
+		        ItemsSource="{Bind Parent.ItemsSource}" DoubleClick="{BindCmd Select, Argument={Bind Parent.ItemsSource}}">
+            <DataGridColumn Content="{Bind Id}" Header="Код"/>
+            <DataGridColumn Header="Наименование" Content="{Bind Name}" />
+            <DataGridColumn Content="{Bind Memo}" Header="Примечание" />
+        </DataGrid>
+        <Pager Source="{Bind Parent.Pager}" />
+    </CollectionView>
+</Dialog>

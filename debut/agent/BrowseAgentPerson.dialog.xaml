@@ -1,0 +1,35 @@
+﻿<Dialog xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml"
+        Title="Выбор физического лица" Width="700" Padding="10">
+    <Dialog.Buttons>
+        <Button Content="Выбрать" Command="{BindCmd Select, Argument={Bind Agents}}"/>
+        <Button Content="Отмена" Command="{BindCmd Close}"/>
+    </Dialog.Buttons>
+    <CollectionView RunAt="Server" ItemsSource="{Bind Agents}" Filter="Fragment">
+        <Toolbar Style="Transparent" Margin="0,0,10,0">
+            <TextBox Value="{Bind Parent.Filter.Fragment}" TabIndex="1" Placeholder="текст для поиска"
+                     Tip="можно ввести до трех фрагментов наименования (через пробел)"
+                     Label="Фрагмент имени:">
+                <TextBox.AddOns>
+                    <Hyperlink Icon="Search" Command="{BindCmd Reload}"/>
+                </TextBox.AddOns>
+            </TextBox>
+            <Button Icon="Refresh" Command="{BindCmd Reload}" Content="Обновить"/>
+            <!--
+        <Button Toolbar.Align="Right" Content="Создать" Icon="Add" Command="[[vm.$addDialog({dialog:'editAgentPerson', array: vm.Agents, context: {Fragment:vm.$query.Fragment}})]]"/>
+        <Button Toolbar.Align="Right" Content="Изменить" Icon="Edit" 
+                        Command="[[vm.$editDialog(vm.Agents.$selected, 'editAgentPerson')]]"
+                        Disabled="{Bind !vm.Agents.$selected}"
+                        />
+        -->
+        </Toolbar>
+        <DataGrid ItemsSource="{Bind Parent.ItemsSource}"  FixedHeader="True" Height="450"
+			  Hover="True" Striped="True" GridLines="Vertical"
+			  DoubleClick="{BindCmd Select, Argument={Bind Agents}}">
+            <DataGridColumn Content="{Bind Id}" Header="Код" Fit="True"/>
+            <DataGridColumn Content="{Bind Name}" Header="Наименование"/>
+            <DataGridColumn Content="{Bind Code}" Header="ИНН" Fit="True"/>
+            <DataGridColumn Content="{Bind Memo}" Header="Примечание"/>
+        </DataGrid>
+        <Pager Source="{Bind Parent.Pager}" />
+    </CollectionView>
+</Dialog>

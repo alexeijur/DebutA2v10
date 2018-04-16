@@ -1,0 +1,40 @@
+﻿{
+  "schema": "a2v10",
+  "model": "Sales.Shipment",
+  "actions": {
+    "index": {
+      "index": true,
+      "view": "index.view",
+      "template": "index.template"
+    },
+    "edit": {
+      "view": "edit.view",
+      "template": "element.template"
+    }
+  },
+  "commands": {
+    "deleteDocument": {
+      "type": "sql",
+      "procedure": "DeleteDocument"
+    },
+    "apply": {
+      "type": "sql",
+      "procedure": "Sales.Shipment.Apply"
+    },
+    "unapply": {
+      "type": "sql",
+      "procedure": "Document.UnApply"
+    }
+  },
+  "reports": {
+    "delidery_note": {
+      "report": "delivery_note_UA"
+    },
+    "shipment_request": {
+      "report": "shipment_request",
+      "parameters": {
+        "Legal": 0
+      }
+    }
+  }
+}

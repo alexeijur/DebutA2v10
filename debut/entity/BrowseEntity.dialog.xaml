@@ -1,0 +1,47 @@
+﻿<Dialog xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      Title="Выбор товара" Size="Large" Padding="10">
+    <Dialog.Buttons>
+        <Button Content="Выбрать" Command="{BindCmd Select, Argument={Bind Entities}}"/>
+        <Button Content="Отмена" Command="{BindCmd Close}"/>
+    </Dialog.Buttons>
+    <CollectionView ItemsSource="{Bind Entities}" RunAt="Server" Filter="Fragment">
+        <Toolbar Style="Transparent">
+            <TextBox Value="{Bind Parent.Filter.Fragment}" TabIndex="1"
+                     Label="текст для поиска:" Tip="можно ввести ПНТ или до трех фрагментов наименования (через пробел)">
+                <TextBox.AddOns>
+                    <Hyperlink Icon="Search" Command="{BindCmd Reload}"/>
+                </TextBox.AddOns>                
+            </TextBox>
+            <!--
+            <Button Toolbar.Align="Right" Content="Создать" Icon="Add" Command="{BindCmd Dialog, Action=Create, Url='/Entity/EditEntity', Argument={Bind Entities}}"/>
+            <Button Toolbar.Align="Right" Content="Изменить" Icon="Edit" 
+                        Command="{BindCmd Dialog, Action=EditSelected, Url='/Entity/EditEntity', Argument={Bind Entities}}" />
+            -->
+        </Toolbar>
+        <DataGrid Hover="True" Striped="True" Border="True"
+                  GridLines="Vertical" Height="400" FixedHeader="True"
+		    ItemsSource="{Bind Parent.ItemsSource}" DoubleClick="{BindCmd Select, Argument={Bind Parent.ItemsSource}}">
+            <DataGridColumn Content="{Bind Article}" Header="ПНТ"/>
+            <DataGridColumn Header="Наименование">
+                <Group>
+                    <Hyperlink Icon="CommentLines" Tip="Карточка товара" Padding="0,6,0,0" 
+                               Command="{BindCmd Dialog, Action=Show, Url='/Entity/entityCard', Argument={Bind}}"/>
+                    <Span Content="{Bind Name}" />
+                </Group>
+            </DataGridColumn>
+            <DataGridColumn Content="{Bind Unit.Name}" Header="Ед. изм." />
+            <DataGridColumn>
+                <Popover Icon="Info" Background="Yellow" Tip="Цены по товару" Placement="BottomLeft" 
+                         If="{Bind Prices.Count}">
+                    <DataGrid ItemsSource="{Bind Prices}" GridLines="Both" Compact="True" 
+                              HeadersVisibility="None">
+                        <DataGridColumn Content="{Bind PriceKind.Name}"/>
+                        <DataGridColumn Content="{Bind Price, DataType=Currency}" Align="Right"/>
+                    </DataGrid>
+                </Popover>
+            </DataGridColumn>
+        </DataGrid>
+        <Pager Source="{Bind Parent.Pager}" />
+    </CollectionView>
+</Dialog>

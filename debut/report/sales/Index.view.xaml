@@ -1,0 +1,16 @@
+<!-- Demo page -->
+<Page xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml">
+    <List ItemsSource="{Bind Reports}" Style="TwoColumnsGrid">
+        <ListItem Icon="FilePreview" Content="{Bind Description}" Padding="6,0">
+            <ListItem.Header>
+                <Hyperlink Content="{Bind Name}" Bold="True"
+                    Command="{BindCmd Open, Url='/Report/Sales/Show', Argument={Bind Id}, NewWindow=True}"/>
+            </ListItem.Header>
+        </ListItem>
+    </List>
+    
+    <!--
+    -->
+</Page>
+
+    

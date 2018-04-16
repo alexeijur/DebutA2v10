@@ -1,0 +1,89 @@
+<Page xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml">
+    <Page.Toolbar>
+        <Toolbar>
+            <Button Icon="Save" Tip="Сохранить изменения" Command="{BindCmd Save}">Сохранить</Button>
+            <Button Icon="SaveClose" Tip="Сохранить изменения и закрыть документ" Command="{BindCmd SaveAndClose}">Сохранить и закрыть</Button>
+            <Button Icon="Reload" Command="{BindCmd Reload}" Tip="Обновить данные">Обновить</Button>
+            <Separator/>
+            <Button Icon="Close" Toolbar.Align="Right"
+                    Command="{BindCmd Close}">Закрыть</Button>
+        </Toolbar>
+    </Page.Toolbar>
+    <Page.Taskpad>
+        <Taskpad Width="300">
+            <Panel Icon="InfoOutline" Padding="0, 6" Header="{Bind Document.Id, Format='Информация о документе [{0}]'}"
+                   Collapsible="True" Style="Info">
+                <PropertyGrid GridLines="Horizontal" Compact="True">
+                    <PropertyGridItem Name="Создан" Content="{Bind Document.D_CREATED, DataType=DateTime}"/>
+                    <PropertyGridItem Name="Изменён" Content="{Bind Document.D_MODIFIED, DataType=DateTime}"/>
+                    <PropertyGridItem Name="Сумма" Content="{Bind Document.Sum, DataType=Currency}" Bold="True"/>
+                </PropertyGrid>
+            </Panel>
+            <Panel Icon="Link" Header="Основание" Collapsible="True" Style="Yellow" Padding="6">
+                <!--<Hyperlink Icon="FileLink" Content="{Bind Document.ParentDoc.$Name}" Command="{BindCmd Open, Url='/Document/Request/Edit', Argument={Bind Document.ParentDoc}}"/>-->
+            </Panel>
+            <Panel Icon="Upload" Header="Возвраты" Collapsible="True" Style="Danger" If="{Bind Document.Done}">
+
+            </Panel>
+        </Taskpad>
+    </Page.Taskpad>
+    <Grid Columns="150, 150, 150, 200, 1*">
+        <Header Grid.Row="1" Grid.Col="1" Size="Medium">Доверенность исходящая</Header>
+
+        <DatePicker Grid.Row="2" Grid.Col="1" Label="Дата" Value="{Bind Document.Date}"/>
+        <DatePicker Grid.Row="2" Grid.Col="2" Label="Дата до" Value="{Bind Document.DateTo}"/>
+        <Static Grid.Row="2" Grid.Col="3" Label="Код" Value="{Bind Document.Id}" Align="Right"/>
+        <TextBox Grid.Row="3" Label="На сумму" Value="{Bind Document.Sum}" Align="Right"/>
+        <TextBox Grid.Row="3" Label="Номер" Value="{Bind Document.No}" Align="Right"/>
+        <!--<DatePicker Grid.Row="8" Label="Дата2" Value="{Bind Document.Date}"/>-->
+        <Selector Grid.Row="4" Grid.ColSpan="3" Label="Покупатель" DisplayProperty="Name" Value="{Bind Document.Agent}"  ValidateValue="{Bind Document.Agent}" Delegate="FetchAgents">
+            <Selector.AddOns>
+                <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/Agent/BrowseAgent', Argument={Bind Document.Agent}}"/>
+            </Selector.AddOns>
+        </Selector>
+        <ComboBox Grid.Row="5" Grid.ColSpan="3" Label="Выдано" Value="{Bind Document.Company}" ItemsSource="{Bind Companies}"/>
+        <TextBox Grid.Row="6" Grid.ColSpan="4" Label="Через кого" Value="{Bind Document.Throughwhom}" Align="Left"/>
+        <TextBox Grid.Row="7" Grid.ColSpan="4" Label="Примечание" Multiline="True"
+                 Value="{Bind Document.Memo}" Rows="3"/>
+    </Grid>
+<!-- Список товара -->
+    <Block Grid.Row="4" Grid.ColSpan="5">
+    <Toolbar Style="Transparent">
+        <Button Icon="Add" Content="Добавить строку" Command="{BindCmd Append, Argument={Bind Document.Rows}}"/>
+        <!--<Button Icon="Download" Content="Подбор товара" Disabled="{Bind Root.$readOnly}"
+                                Command="{BindCmd Dialog, Action=Show, Url='/Document/Request/entityChoice', Argument={Bind Document.Contract.Id}}"/>-->
+    </Toolbar>
+        <Table ItemsSource="{Bind Document.Rows}" GridLines="Both" Border="True" Columns="Fit,600,Fit,Fit,Fit,Fit" Background="Paper">
+            <Table.Header>
+                <TableRow>
+                    <TableCell >#</TableCell>
+                    <TableCell >Товар</TableCell>
+                    <TableCell>Ед. изм.</TableCell>
+                    <TableCell>ПР.Ед. изм.</TableCell>
+                    <TableCell Wrap="NoWrap">Кол-во</TableCell>
+                    <!--<TableCell >Сумма</TableCell>-->
+                    <TableCell>  </TableCell>
+                </TableRow>
+            </Table.Header>
+            <TableRow>
+                <TableCell Content="{Bind RowNo}" Align="Right"/>
+                <TableCell>
+                    <Selector DisplayProperty="Name" Value="{Bind Entity}" ValidateValue="{Bind Entity}" Delegate="FetchEntity">
+                        <Selector.AddOns>
+                            <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/Entity/BrowseEntity', Argument={Bind Entity}}"/>
+                        </Selector.AddOns>
+                    </Selector>
+                </TableCell>
+                <Static Value="{Bind Entity.Unit.Name}" Align="Center"/>
+                <TextBox Value="{Bind Entity.FUnit.Name}" Align="Center"/>
+                <!--кол-во-->
+                <TextBox Value="{Bind Qty}" Align="Right"/>
+                <TableCell VAlign="Middle">
+                    <Hyperlink Size="Small" Icon="Delete" Command="{BindCmd Remove, Argument={Bind}, Confirm='Действительно удалить строку?'}"/>
+                </TableCell>
+            </TableRow>
+        </Table>
+    </Block>
+</Page>
+
+    

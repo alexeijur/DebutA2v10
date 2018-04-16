@@ -1,0 +1,242 @@
+﻿<Dialog xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml"
+        Title="{Bind Contract.Id, Format='Условия работы с покупателем [{0}]'}"
+        Width="700" Height="400"
+    >
+    <Dialog.Buttons>
+        <Button Content="Сохранить" Command="{BindCmd SaveAndClose}" />
+        <Button Content="Отмена" Command="{BindCmd Close}" />
+    </Dialog.Buttons>
+    <TabPanel>
+        <Tab Header="Общие">
+            <Grid Columns="1*, 1*, 2*" Rows="Auto, Auto, Auto, 80, Auto">
+                <TextBox Grid.Row="1" Grid.ColSpan="2" Label="Официальный договор" Value="{Bind Contract.ContractLegal.Name}" ValidateValue="{Bind Contract.ContractLegal}">
+                    <TextBox.AddOns>
+                        <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/contractlegal/BrowseContract', Argument={Bind Contract.ContractLegal}, Data={Bind Contract.$BrowseContractLegalData}}"/>
+                        <Hyperlink Icon="Clear" Command="{BindCmd Clear, Argument={Bind Contract.ContractLegal}}"/>
+                    </TextBox.AddOns>
+                </TextBox>
+                <!--<TextBox Grid.Row="1" Label="№ договора" Value="{Bind Contract.SNo}"/>
+                <DatePicker Grid.Row="1" Grid.Col="2" Label="Дата" Value="{Bind Contract.Date}"/>
+                <CheckBox Grid.Row="1" Grid.Col="3" Margin="0, 0, 4, 0" Label="Основной" Value="{Bind Contract.IsMain}"/>-->
+                <TextBox Grid.Row="1" Grid.Col="3" Grid.ColSpan="2" Label="Объект строительства" Value="{Bind Contract.BuildObject.Name}">
+                    <TextBox.AddOns>
+                        <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/browseBuildObject', Argument={Bind Contract.BuildObject}}"/>
+                    </TextBox.AddOns>
+                </TextBox>
+                <TextBox Grid.Row="3"  Grid.ColSpan="2" Label="Продавец" Value="{Bind Contract.ContractLegal.Company.Name}" Disabled="True"/>
+                <TextBox Grid.Row="3" Grid.Col="3" Label="Покупатель" Value="{Bind Contract.Contragent.Name}" Disabled="True"/>
+                <CheckBox Grid.Row="4" Grid.Col="1" Label="Основной" Value="{Bind Contract.IsMain}"/>
+                <TextBox Grid.Row="5" Grid.ColSpan="3" Multiline="True" Rows="3"
+                         Label="Примечание" Value="{Bind Contract.Memo}"/>
+            </Grid>
+        </Tab>
+        <Tab Header="Цены">
+            <Grid Columns="1* 1* 1*">
+                <ComboBox Grid.Col="1" Label="Прайс-лист"
+					          ItemsSource="{Bind PriceLists}"
+		    			      Value="{Bind Contract.PriceList}"/>
+                <ComboBox Grid.Col="2" Label="Вид цены" 
+				        	  ItemsSource="{Bind Contract.PriceList.PriceKinds}"
+					          Value="{Bind Contract.PriceKind}"/>
+                <ComboBox Grid.Row="2" Grid.ColSpan="2" Label="Способ оформления транспортных услуг"
+                              Value="{Bind Contract.TypeAddSumTransportServ, DataType=Number}">
+                    <ComboBoxItem Value="0">К документу</ComboBoxItem>
+                    <ComboBoxItem Value="1">К себестоимости товара</ComboBoxItem>
+                    <ComboBoxItem Value="2">К цене покупателя</ComboBoxItem>
+                </ComboBox>
+            </Grid>
+        </Tab>
+        <Tab Header="Оплата">
+            <Grid Columns="220, 220, 1*">
+                <Static Grid.Col="1" Value="{Bind Contract.PayTerm.Name}" Label="Условия оплаты"/>
+                <ComboBox Grid.Col="2" Label="Форма оплаты"
+                              ItemsSource="{Bind PayForms}" Value="{Bind Contract.PayForm}" />
+                <Block Grid.Row="2" Grid.ColSpan="2">
+                    <Toolbar Style="Transparent">
+                        <Header Size="Small">График оплат</Header>
+                        <Button Toolbar.Align="Right" Icon="Add" Content="Добавить" Command="{BindCmd Append, Argument={Bind Contract.PaySchedule}}"/>
+                    </Toolbar>
+                    <DataGrid ItemsSource="{Bind Contract.PaySchedule}"
+                              FixedHeader="True" GridLines="Both" Border="True" Height="180">
+                        <DataGridColumn Header="#" Content="{Bind RowNo}" Fit="True"/>
+                        <DataGridColumn Header="Отсрочка (дней)">
+                            <TextBox Value="{Bind Days}" Align="Right"/>
+                        </DataGridColumn>
+                        <DataGridColumn Header="Процент оплаты" Width="100">
+                            <TextBox Value="{Bind Percent, DataType=Currency}" Align="Right"/>
+                        </DataGridColumn>
+                        <DataGridColumn Fit="True">
+                            <Hyperlink Size="Small" Icon="Delete" Command="{BindCmd Remove, Confirm='Вы действительно хотите удалить строку?'}"/>
+                        </DataGridColumn>
+                    </DataGrid>
+                </Block>
+                <Static Grid.Row="3" Label="Всего дней" 
+                        Value="{Bind Contract.$PayScheduleTotalDays}" Align="Right"/>
+                <Static Grid.Row="3" Grid.Col="2" Label="Итого процент" 
+                        Value="{Bind Contract.$PayScheduleTotal}" Align="Right"/>
+                <!-- 
+                <Header Content="Оплата" Size="Small"/>
+                <GridRow>
+                    <Block Grid.Column="Col6">
+                        <Toolbar Style="Transparent">
+                            <Header Size="Small">График оплат</Header>
+                            <Button Toolbar.Align="Right" Icon="Add" Content="Добавить" Command="[[vm.Contract.PaySchedule.$append()]]"/>
+                        </Toolbar>
+                        <Table Compact="True" Bordered="True" CssStyle="table-layout:fixed"
+								ItemsSource="[[pay in Contract.PaySchedule]]">
+                            <Table.Columns>
+                                <TableColumn />
+                                <TableColumn />
+                                <TableColumn Width="20px"/>
+                            </Table.Columns>
+                            <Table.Header>
+                                <TableRow>
+                                    <TableCell Align="Center">Отсрочка (дней)</TableCell>
+                                    <TableCell Align="Center">Процент оплаты</TableCell>
+                                    <TableCell />
+                                </TableRow>
+                            </Table.Header>
+                            <TableRow>
+                                <TextBox Size="Small" Align="Right" Value="{Bind Expression='pay.Days', DataType=Number}" />
+                                <TextBox Size="Small" Align="Right" Value="{Bind Expression='pay.Percent', DataType=Currency}" />
+                                <Hyperlink Icon="Times" Command="[[vm.$remove(pay)]]"></Hyperlink>
+                            </TableRow>
+                            <Table.Footer>
+                                <TableRow>
+                                    <TableCell VAlign="Top">
+                                        <Static Size="Small" Bold="True" Align="Right" Value="[[Contract.$PayScheduleTotalDays]]"/>
+                                    </TableCell>
+                                    <Static Size="Small" Bold="True" Align="Right" Value="{Bind Expression='Contract.$PayScheduleTotal', DataType=Currency}"/>
+                                    <TableCell />
+                                </TableRow>
+                            </Table.Footer>
+                        </Table>
+                    </Block>
+                </GridRow>
+                -->
+            </Grid>
+        </Tab>
+        <Tab Header="Бонусы" If="{Bind !Contract.$HasNoVat}">
+            <Grid Columns="110,400,1*">
+                <TextBox Grid.Col="1" Label="Персоналка 1 (%)" Align="Right"
+                         Value="{Bind Contract.PercBonus4Pers}"/>
+                <TextBox Grid.Col="2" Label="Получатель персоналки 1"
+                         Value="{Bind Contract.BonusPers.Name}" 
+                         >
+                    <TextBox.AddOns>
+                        <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/Agent/BrowseAgentPerson', Argument={Bind Contract.BonusPers}, Data={Bind Contract.$PersonKind}}"/>
+                        <Hyperlink Icon="Clear" Command="{BindCmd Clear, Argument={Bind Contract.BonusPers}}"/>
+                    </TextBox.AddOns>
+                </TextBox>
+                <TextBox Grid.Row="2" Grid.Col="1" Label="Персоналка 2 (%)" Align="Right"
+                         Value="{Bind Contract.PercBonus4Pers2}" />
+                <TextBox Grid.Row="2" Grid.Col="2" Label="Получатель персоналки 2"
+                    Value="{Bind Contract.BonusPers2.Name}">
+                    <TextBox.AddOns>
+                        <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/Agent/BrowseAgentPerson', Argument={Bind Contract.BonusPers2}, Data={Bind Contract.$PersonKind}}"/>
+                        <Hyperlink Icon="Clear" Command="{BindCmd Clear, Argument={Bind Contract.BonusPers2}}"/>
+                    </TextBox.AddOns>
+                </TextBox>
+                <Block Grid.Row="3" Grid.ColSpan="2">
+                    <Toolbar Style="Transparent">
+                        <Header Content="Получатели превышения" Size="Small"/>
+                        <Button Toolbar.Align="Right" Icon="Add" Content="Добавить строку"
+                                Command="{BindCmd Append, Argument={Bind Contract.PersonRows}}"/>
+                    </Toolbar>
+                    <Table ItemsSource="{Bind Contract.PersonRows}"
+                           GridLines="Both" Width="100%" Border="True" Columns="Fit,Auto,Fit,Fit">
+                        <Table.Header>
+                            <TableRow>
+                                <TableCell>#</TableCell>
+                                <TableCell>Физическое лицо</TableCell>
+                                <TableCell Wrap="NoWrap">% на руки</TableCell>
+                                <TableCell/>
+                            </TableRow>
+                        </Table.Header>
+                        <TableRow>
+                            <TableCell>
+                                <Static Value="{Bind RowNo}" Align="Right"/>
+                            </TableCell>
+                            <TableCell>
+                                <TextBox Value="{Bind Agent.Name}">
+                                    <TextBox.AddOns>
+                                        <Hyperlink Icon="Search"
+                                                   Command="{BindCmd Dialog, Action=Browse, Url='/Agent/BrowseAgentPerson', Argument={Bind Agent}, Data={Bind Root.Contract.$PersonKind}}" />
+                                    </TextBox.AddOns>
+                                </TextBox>
+                            </TableCell>
+                            <TableCell>
+                                <TextBox Value="{Bind Percent}" Align="Right"/>
+                            </TableCell>
+                            <TableCell>
+                                <Hyperlink Icon="Delete" Size="Small" Tip="Удалить строку" Command="{BindCmd Remove, Confirm='Вы действительно хотите удалить строку?'}"/>
+                            </TableCell>
+                        </TableRow>
+                    </Table>
+                </Block>
+            </Grid>
+        </Tab>
+        <Tab Header="Спецификация" Padding="10">
+            <Toolbar Style="Transparent">
+                <Header Size="Small">Спецификация товаров для договора</Header>
+                <Button Toolbar.Align="Right" Icon="Add" Content="Добавить строку" Command="{BindCmd Append, Argument={Bind Contract.SpecRows}}"/>
+            </Toolbar>
+            <Table ItemsSource="{Bind Contract.SpecRows}" 
+                   GridLines="Both" Width="100%" Border="True" Columns="100,Auto,120,110,80,Fit">
+                <Table.Header>
+                    <TableRow>
+                        <TableCell>Вид</TableCell>
+                        <TableCell>Группа/Подргуппа/Товар</TableCell>
+                        <TableCell>Прайс-лист</TableCell>
+                        <TableCell>Вид цены</TableCell>
+                        <TableCell>Цена</TableCell>
+                        <TableCell/>
+                    </TableRow>
+                </Table.Header>
+                <TableRow>
+                    <TableCell>
+                        <ComboBox Value="{Bind Mode, DataType=Number}">
+                            <ComboBoxItem Value="1" Content="Группа" />
+                            <ComboBoxItem Value="2" Content="Подгруппа" />
+                            <ComboBoxItem Value="3" Content="Товар" />
+                        </ComboBox>
+                    </TableCell>
+                    <TableCell>
+                        <Group>
+                            <!-- group -->
+                            <TextBox Value="{Bind Group.Name}" If="{Bind $IsGroup}"  ValidateValue="{Bind Group}">
+                                <TextBox.AddOns>
+                                    <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/Entity/BrowseGroup', Argument={Bind Group}}"/>
+                                </TextBox.AddOns>
+                            </TextBox>
+                            <!-- subGroup -->
+                            <TextBox Value="{Bind SubGroup.Name}" If="{Bind $IsSubGroup}" ValidateValue="{Bind SubGroup}">
+                                <TextBox.AddOns>
+                                    <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/Entity/BrowseSubGroup', Argument={Bind SubGroup}}"/>
+                                </TextBox.AddOns>
+                            </TextBox>
+                            <!-- entity -->
+                            <TextBox Value="{Bind Entity.Name}" If="{Bind $IsEntity}" Tip="{Bind Entity.Name}" ValidateValue="{Bind Entity}">
+                                <TextBox.AddOns>
+                                    <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/Entity/BrowseEntity', Argument={Bind Entity}}"/>
+                                </TextBox.AddOns>
+                            </TextBox>
+                        </Group>
+                    </TableCell>
+                    <TableCell>
+                        <ComboBox ItemsSource="{Bind Root.PriceLists}"
+		    			          Value="{Bind PriceList}" Disabled="{Bind $PriceListDisabled}"/>
+                    </TableCell>
+                    <TableCell>
+                        <ComboBox ItemsSource="{Bind PriceList.PriceKinds}"
+					              Value="{Bind PriceKind}" Disabled="{Bind $PriceListDisabled}"/>
+                    </TableCell>
+                    <TextBox Align="Right" Value="{Bind Price, DataType=Currency}" Disabled="{Bind $PriceDisabled}"/>
+                    <TableCell>
+                        <Hyperlink Icon="Delete" Command="{BindCmd Remove, Argument={Bind}, Confirm='Вы действительно хотите удалить строку?'}" Size="Small"/>
+                    </TableCell>
+                </TableRow>
+            </Table>
+        </Tab>
+    </TabPanel>
+</Dialog>

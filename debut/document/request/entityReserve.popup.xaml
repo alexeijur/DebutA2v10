@@ -1,0 +1,11 @@
+﻿<Popup xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml"
+       Width="420">
+	<Span Content="{Bind Entity.Name}" Bold="True" />
+    <DataGrid Hover="True" Striped="True" Margin="6, 0, 0, 0"
+		    ItemsSource="{Bind Entity.Reserves}" GridLines="Vertical">
+		<DataGridColumn Content="{Bind Date, DataType=Date}" Header="Дата" Fit="True"/>
+		<DataGridColumn Content="{Bind Customer}" Header="Покупатель"/>
+		<DataGridColumn Content="{Bind Qty, DataType=Number}" Header="Кол-во" Align="Right" Width="70"/>
+		<DataGridColumn Content="{Bind Warehouse}" Header="Склад"/>
+	</DataGrid>
+</Popup>

@@ -1,0 +1,48 @@
+﻿{
+  "schema": "a2v10",
+  "model": "Sales.warrentyin",
+  "actions": {
+    "index": {
+      "index": true,
+      "view": "index.view",
+      "template": "index.template"
+    },
+    "edit": {
+      "view": "edit.view",
+      "template": "warrentyin.template"
+    }
+  },
+  "commands": {
+    //"deleteDocument": {
+    //  "type": "sql",
+    //  "procedure": "DeleteDocument"
+    //},
+    "apply": {
+      "type": "sql",
+      "procedure": "Sales.Warrentyin.Apply"
+    },
+    "unapply": {
+      "type": "sql",
+      "procedure": "Document.UnApply"
+    },
+    "CopyDoc": {
+      "type": "sql",
+      "procedure": "Document.CopySelected"
+    }
+  }
+  //,
+  //"commands": {
+  //  "nextDocNo": {
+  //    "type": "sql",
+  //    "procedure": "NextDocNo"
+  //  },
+  //  "apply": {
+  //    "type": "sql",
+  //    "procedure": "Document.Apply"
+  //  },
+  //  "unApply": {
+  //    "type": "sql",
+  //    "procedure": "Document.UnApply"
+  //  }
+  //}
+}

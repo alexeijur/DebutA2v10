@@ -1,0 +1,37 @@
+﻿<Dialog xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml"
+      Title="Карточка товара" Size="Medium">
+	<Dialog.Buttons>
+		<Button Content="Закрыть" Command="{BindCmd Close}"/>
+	</Dialog.Buttons>
+	<TabPanel>
+		<Tab Header="Общая информация">
+			<Grid Columns="1*, 1*, 1*, 1*">
+				<Static Grid.Row="1" Grid.ColSpan="4" Label="Наименование (рус.)" Value="{Bind Entity.Name}"/>
+                <Static Grid.Row="2" Grid.ColSpan="4" Label="Наименование (укр.)" Value="{Bind Entity.FullName}"/>
+                <Static Grid.Row="3" Label="ПНТ" Value="{Bind Entity.Article}" />
+                <Static Grid.Row="3" Grid.Col="2" Label="Ед. изм." Value="{Bind Entity.Unit}" />
+                <Static Grid.Row="3" Grid.Col="3" Label="Вес" Value="{Bind Entity.Weight, DataType=Number}" Align="Right"/>
+                <Static Grid.Row="3" Grid.Col="4" Label="В упаковке" Value="{Bind Entity.Pack}" Align="Right"/>
+                <Static Grid.Row="4" Grid.ColSpan="2" Label="Группа" Value="{Bind Entity.Group}" Grid.VAlign="Top"/>
+                <Static Grid.Row="4" Grid.Col="3" Grid.ColSpan="2" Label="Подгруппа" Value="{Bind Entity.SubGroup}" Grid.VAlign="Top"/>
+                <Block Grid.Row="5" Grid.ColSpan="4">
+                    <Toolbar Style="Transparent">
+                        <Header Size="Small">Цены</Header>
+                        <ComboBox Label="Прайс-лист" Toolbar.Align="Right"
+                                  ItemsSource="{Bind PriceLists}"
+                                  Value="{Bind Entity.SelectedPriceList}"/>
+                    </Toolbar>
+                    <DataGrid Striped="True" Border="True" GridLines="Vertical"
+                              ItemsSource="{Bind Entity.SelectedPriceList.Prices}" >
+                        <DataGridColumn Header="Вид цены" Content="{Bind Name}"/>
+                        <DataGridColumn Header="Цена" Align="Right" Content="{Bind Price, DataType=Currency}"/>
+                        <DataGridColumn Header="На дату" Content="{Bind Date, DataType=Date}" Align="Center"/>
+                    </DataGrid>
+                </Block>
+            </Grid>
+		</Tab>
+        <!--<Tab Header="Отладка">
+            <Code Multiline="True" Content="{Bind Entity}"/>
+        </Tab>-->
+	</TabPanel>
+</Dialog>

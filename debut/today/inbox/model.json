@@ -1,0 +1,15 @@
+﻿{
+  "schema": "a2v10",
+  "model": "Inbox",
+  "actions": {
+    "index": {
+      "index": true,
+      "view": "index.view"
+    },
+    "open": {
+      "indirect": true,
+      "target": "{{Inbox.Action}}",
+      "targetId": "{{Inbox.ModelId}}"
+    }
+  }
+}

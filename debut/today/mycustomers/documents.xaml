@@ -1,0 +1,20 @@
+﻿<DataGrid 
+	xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+		ItemsSource="{Bind Agents.$selected.Documents}" Pagination="Default"
+			Striped="True" Hover="True" Select="True" FixedHeader="True">
+    <DataGrid.Toolbar>
+        <Toolbar>
+            <Button Content="Открыть" Icon="FileO" 
+                    Command="[[vm.$open(Agents.$selected.Documents.$selected, 'edit', 'sales/request')]]" 
+                    Disabled="{Bind !Agents.$selected.Documents.$selected || true}"/>   <!--пока документы Акцента не открываем-->
+			<Separator />
+            <Button Content="Обновить" Icon="Refresh" Command="[[Agents.$selected.Documents.$reload()]]" />
+        </Toolbar>
+    </DataGrid.Toolbar>
+    <DataGridColumn Header="Код" Content="{Bind Id}" Align="Right"/>
+    <DataGridColumn Header="Дата" Content="{Bind Date, DataType=Date}" Align="Right"/>
+    <DataGridColumn Header="Номер" Content="{Bind SNo}" Align="Right"/>
+    <DataGridColumn Header="Сумма" Align="Right" Content="[[item.Sum | currency : '']]"/>
+    <DataGridColumn Header="Операция" Content="{Bind Name}"/>
+</DataGrid>

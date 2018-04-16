@@ -1,0 +1,80 @@
+﻿<!--Отгрузки - индекс -->
+<Page xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      >
+    <Page.Resources>
+        <ResourceDictionary>
+            <sys:String x:Key="EditUrl">/Document/Shipment/Edit</sys:String>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Page.CollectionView>
+        <CollectionView ItemsSource="{Bind Documents}" RunAt="ServerUrl" Filter="Fragment">
+        </CollectionView>
+    </Page.CollectionView>
+    <Page.Toolbar>
+        <Toolbar>
+            <!--
+            <Button Content="Создать" Icon="Add" Command="{BindCmd Create, Url={StaticResource EditUrl}}" />
+            -->
+            <Button Content="Открыть" Icon="ArrowOpen" 
+                        Command="{BindCmd OpenSelected, Url={StaticResource EditUrl}, Argument={Bind Documents}}" />
+            <Button Content="Удалить" Icon="Delete" Command="{BindCmd DbRemoveSelected, Argument={Bind Documents}, Confirm='Вы действительно хотите удалить документ?'}" />
+            <!--
+            <Separator />
+            <ComboBox Label="Продавец:" Tip="Выберите продавца" Change="{BindCmd Reload}"
+						  Value="{Bind Expression=vm.$query.Company}" ItemsSource="{Bind Companies}">
+                <ComboBoxItem Text="&lt;Все продавцы&gt;" Value="-1" />
+                <ComboBox.ItemTemplate>
+                    <ComboBoxItem Text="{Bind Name}" Value="{Bind Id}"/>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            -->
+            <Separator />
+            <Button Content="Обновить" Icon="Refresh" Command="{BindCmd Reload}" />
+            <Separator />
+            <TextBox Label="@[Search]:" Value="{Bind Parent.Filter.Fragment}" Placeholder="Фрагмент для поиска" Width="Auto">
+                <TextBox.AddOns>
+                    <Hyperlink Icon="Search" />
+                </TextBox.AddOns>
+            </TextBox>
+        </Toolbar>
+    </Page.Toolbar>
+    <Page.Pager>
+        <Pager Source="{Bind Parent.Pager}" />
+    </Page.Pager>
+    <DataGrid ItemsSource="{Bind Parent.ItemsSource}" GridLines="Vertical" FixedHeader="True" Sort="True"
+			  Striped="True" Hover="True" MarkerStyle="Both" Mark="{Bind $Style}"
+              DoubleClick="{BindCmd OpenSelected, Url={StaticResource EditUrl}, 
+        Argument={Bind Parent.ItemsSource}}">
+        <DataGridColumn Header="Код" Content="{Bind Id}" Command="{BindCmd Open, Url={StaticResource EditUrl}}"/>
+        <DataGridColumn Header="Дата" Content="{Bind Date, DataType=Date}" Align="Center"/>
+        <DataGridColumn Header="Номер" Content="{Bind SNo}"/>
+        <DataGridColumn Header="Сумма" Align="Right" Content="{Bind Sum, DataType=Currency}"/>
+        <DataGridColumn Header="Покупатель" Content="{Bind Agent.Name}"/>
+        <DataGridColumn Header="Продавец" Content="{Bind Company.Name}"/>
+        <DataGridColumn Header="Примечание" Content="{Bind Memo}"/>
+        <!--<DataGridColumn Header="Статус" Content="{Bind Status}" Align="Center"/>-->
+        <DataGrid.RowDetails>
+            <DataGridRowDetails Activate="Cell" Visible="{Bind $HasReturns}">
+                <StackPanel Orientation="Horizontal">
+                    <Header Size="Mini" Margin="0,5,0,0">Отгрузки:</Header>
+                    <Table Compact="True" Striped="True" GridLines="Both" Border="True" 
+                           Header="Код,Дата,Номер,Сумма,Склад"
+                           ItemsSource="{Bind Returns}">
+                        <TableRow>
+                            <TableCell Align="Right">
+                                <Hyperlink Content="{Bind Id}" Command="{BindCmd Open, Url='/Document/Shipment/Edit', Argument={Bind Id}}"  />
+                            </TableCell>
+                            <TableCell Content="{Bind Date, DataType=Date}"/>
+                            <TableCell Content="{Bind SNo}"/>
+                            <TableCell Content="{Bind Sum, DataType=Currency}" Align="Right"/>
+                            <TableCell Content="{Bind Warehouse.Name}"/>
+                        </TableRow>
+                    </Table>
+                    <Header Size="Mini" Margin="0,5">Оплаты:</Header>
+                </StackPanel>
+            </DataGridRowDetails>
+        </DataGrid.RowDetails>
+    </DataGrid>
+</Page>

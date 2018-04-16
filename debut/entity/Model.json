@@ -1,0 +1,31 @@
+﻿{
+  "schema": "a2v10",
+  "dialogs": {
+    "browseEntity": {
+      "model": "Sales.Request.Entity",
+      "view": "browseEntity.dialog",
+      "index": true
+    },
+    "entityCard": {
+      "view": "entityCard.dialog",
+      "model": "Sales.Entity.Card",
+      "template": "entityCard.template"
+    },
+    "BrowseGroup": {
+      "view": "browseGroup.dialog",
+      "model": "Group.Browse",
+      "index": true
+    },
+    "BrowseSubGroup": {
+      "view": "browseSubGroup.dialog",
+      "model": "SubGroup.Browse",
+      "index": true
+    }
+  },
+  "commands": {
+    "getEntitySelector": {
+      "type": "sql",
+      "procedure": "getEntitySelector"
+    }
+  }
+}

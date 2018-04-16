@@ -1,0 +1,55 @@
+﻿<Dialog xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml"
+        Title="Подбор товара" Width="1200" Padding="7">
+    <Dialog.Buttons>
+        <Button Content="Закрыть" Command="{BindCmd Close}"/>
+    </Dialog.Buttons>
+    <CollectionView ItemsSource="{Bind Entities}" RunAt="Server">
+        <CollectionView.Filter>
+            <FilterDescription>
+                <FilterItem Property="Fragment" DataType="String"/>
+                <FilterItem Property="InStockOnly" DataType="Boolean" Value="True"/>
+            </FilterDescription>
+        </CollectionView.Filter>
+        <Toolbar Style="Transparent">
+            <TextBox Value="{Bind Parent.Filter.Fragment}" Label="текст для поиска:"
+                     Tip="можно ввести ПНТ или до трех фрагментов наименования (через пробел)">
+                <TextBox.AddOns>
+                    <Hyperlink Icon="Search" Command="{BindCmd Reload}"/>
+                </TextBox.AddOns>
+            </TextBox>
+            <CheckBox Label="Только остатки" Value="{Bind Parent.Filter.InStockOnly}" />
+        </Toolbar>
+        <DataGrid Hover="True" Striped="True" Border="True" GridLines="Vertical"
+		        ItemsSource="{Bind Parent.ItemsSource}" FixedHeader="True" Height="450">
+            <DataGridColumn Content="{Bind Article}" Header="ПНТ" Fit="True"/>
+            <DataGridColumn Header="Наименование">
+                <Text>
+                    <Hyperlink Padding="0,6,0,0" Icon="CommentLines"  Tip="Карточка товара" Command="{BindCmd Dialog, Action=Show, Url='/Entity/EntityCard', Argument={Bind Id}}"/>
+                    <Span Content="{Bind Name}"/>
+                </Text>
+            </DataGridColumn>
+            <DataGridColumn Content="{Bind Unit.Name}" Header="Ед. изм." Align="Center"/>
+            <DataGridColumn Content="{Bind Rem, DataType=Number}" Header="Остаток" Align="Right" Fit="True"/>
+            <DataGridColumn Header="Кол-во" Align="Right" Editable="True" Content="{Bind Qty, DataType=Number}" Width="80"/>
+            <DataGridColumn Header="Цена">
+                <Static Value="{Bind Price, DataType=Currency}" Align="Right">
+                    <Static.AddOns>
+                        <Popover If="{Bind $HasPrices}" Icon="InfoOutline" Background="Cyan" Placement="BottomLeft" Padding="0">
+                            <Popup>
+                                <Table ItemsSource="{Bind Prices}" Compact="True" GridLines="Both">
+                                    <TableRow>
+                                        <TableCell Content="{Bind PriceKind.Name}" Wrap="NoWrap" />
+                                        <TableCell Content="{Bind Price, DataType=Currency}" Align="Right" />
+                                    </TableRow>
+                                </Table>
+                            </Popup>
+                        </Popover>
+                    </Static.AddOns>
+                </Static>
+            </DataGridColumn>
+            <DataGridColumn Content="{Bind PriceScale}" Header="Цены" Wrap="NoWrap" Align="Center"/>
+            <DataGridColumn Content="{Bind Warehouse.Name}" Header="Склад" Wrap="NoWrap"/>
+        </DataGrid>
+        <Pager Source="{Bind Parent.Pager}"/>
+    </CollectionView>
+</Dialog>

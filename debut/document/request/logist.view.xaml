@@ -1,0 +1,87 @@
+﻿<Page xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml">
+    <Page.Toolbar>
+        <Toolbar>
+            <Button Icon="Save" Command="{BindCmd Save}" Content="Сохранить"/>
+            <Button Icon="Save" Command="{BindCmd SaveAndClose}"
+					Content="Сохранить и Закрыть" />
+            <Button Icon="Refresh" Content="Обновить" Command="{BindCmd Reload}" />
+            <Separator />
+            <Button Icon="Close" Command="{BindCmd Close}" Content="Закрыть" Toolbar.Align="Right"/>
+        </Toolbar>
+    </Page.Toolbar>
+    <Page.Taskpad>
+        <Taskpad Width="300">
+            <Button Content="Взять себе" If="{Bind Inbox.$IsInPool}"
+                    Command="{BindCmd Execute, CommandName='getForMe', Argument={Bind Inbox}, SaveRequired=True}"
+                    Icon="Download" Block="True" Size="Large" Style="Cyan" />
+            <Button Content="Выполнено" If="{Bind Inbox.$IsNotInPool}"
+                    Command="{BindCmd Execute, CommandName='setDone', Argument={Bind Inbox}, SaveRequired=True}"
+                    Icon="Process" Block="True" Size="Large" Style="Green" />
+            <Button Content="Вернуть в пул" If="{Bind Inbox.$IsNotInPool}"
+                    Command="{BindCmd Execute, CommandName='returnToPool', Argument={Bind Inbox}, SaveRequired=True}"
+                    Icon="Process" Block="True" Size="Large" Style="Orange"/>
+            <Line />
+            <Panel Padding="0, 6" Header="{Bind Document.Id, Format='Информация о заказе [{0}]'}"
+                   Collapsible="True">
+                <PropertyGrid GridLines="Horizontal" Compact="True">
+                    <PropertyGridItem Name="Создан" Content="{Bind Document.DateCreated, DataType=DateTime}"/>
+                    <PropertyGridItem Name="Изменён" Content="{Bind Document.DateModified, DataType=DateTime}"/>
+                </PropertyGrid>
+            </Panel>
+            <Panel Padding="0, 6" Header="{Bind Inbox.Id, Format='Inbox [{0}]'}"
+                   Collapsible="True">
+                <PropertyGrid GridLines="Horizontal" Compact="True">
+                    <PropertyGridItem Name="ActionBase" Content="{Bind Inbox.ActionBase}"/>
+                    <PropertyGridItem Name="Bookmark" Content="{Bind Inbox.Bookmark}"/>
+                    <PropertyGridItem Name="Создан" Content="{Bind Inbox.DateCreated, DataType=DateTime}"/>
+                </PropertyGrid>
+            </Panel>
+        </Taskpad>
+    </Page.Taskpad>
+    <TabPanel FullPage="True">
+        <Tab Header="Доставка" If="True">
+            <Grid Rows="Auto" Columns="130, 450, 1*, Auto">
+                <TextBox Label="Стоимость (без НДС)" Align="Right"  Tip="Стоимость доставки"
+                                 Value="{Bind Document.SRows[0].Sum, DataType=Currency}"/>
+                <TextBox Label="Адрес доставки" Grid.Col="2" Tip="Укажите полный адрес,по которому нужно доставить товар"
+                                 Value="{Bind Document.SRows[0].Memo}" Disabled="True"/>
+                <Text Grid.Row="1" Grid.Col="4">Всего масса товара:
+                    <Span Bold="True" Content="{Bind Document.Weight, DataType=Number}"/>
+                    кг.
+                </Text>
+            </Grid>
+            <Table Grid.Row="3" Grid.ColSpan="3" ItemsSource="{Bind Document.Rows}" Margin="0 10"
+                   Background="Yellow"
+                   Border="True" GridLines="Both" Columns="Fit,Auto,Auto,Fit,Fit,Fit,Fit,Fit,Auto">
+                <Table.Header>
+                    <TableRow>
+                        <TableCell>№</TableCell>
+                        <TableCell>ПНТ</TableCell>
+                        <TableCell>Товар</TableCell>
+                        <TableCell>Ед.\nизм.</TableCell>
+                        <TableCell>Кол-во\nв упаковке</TableCell>
+                        <TableCell>Масса\nединицы</TableCell>
+                        <TableCell>Кол-во</TableCell>
+                        <TableCell>Масса\nтовара</TableCell>
+                        <TableCell>Склад</TableCell>
+                    </TableRow>
+                </Table.Header>
+                <TableRow>
+                    <TableCell Content="{Bind RowNo}" Align="Right"/>
+                    <TableCell Content="{Bind Entity.Article}" Align="Right"/>
+                    <Text>
+                        <Hyperlink If="{Bind $HasEntity}" Icon="CommentLines" Tip="Карточка товара" Padding="0,6,0,0" 
+                               Command="{BindCmd Dialog, Action=Show, Url='/Entity/entityCard', Argument={Bind Entity}}"/>
+                        <Span Content="{Bind Entity.Name}"/>
+                    </Text>
+                    <TableCell Content="{Bind Unit.Name}" Align="Center"/>
+                    <TableCell Content="{Bind Entity.Pack}" Align="Right"/>
+                    <TableCell Content="{Bind Entity.Weight, DataType=Number}" Align="Right"/>
+                    <TableCell Content="{Bind Qty, DataType=Number}" Align="Right"/>
+                    <TableCell Content="{Bind $Weight, DataType=Number}" Align="Right"/>
+                    <TableCell Content="{Bind Warehouse.Name}" Wrap="NoWrap"/>
+                </TableRow>
+            </Table>
+        </Tab>
+    </TabPanel>
+</Page>

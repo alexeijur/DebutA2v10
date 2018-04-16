@@ -1,0 +1,20 @@
+﻿/*Document/reports*/
+{
+  "schema": "a2v10",
+  "model": "Report",
+  "actions": {
+    "index": {
+      "index": true,
+      "view": "Index.view"
+    },
+    "show": {
+      "indirect": true,
+      "targetModel": {
+        "model": "{{Report.Model}}",
+        "view": "{{Report.View}}",
+        "schema": "{{Report.Schema}}",
+        "template": "{{Report.Template}}"
+      }
+    }
+  }
+}

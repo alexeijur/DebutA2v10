@@ -1,0 +1,35 @@
+﻿<Dialog xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml"
+      Title="Выбор контрагента" Width="700" Padding="10"
+    >
+    <Dialog.Buttons>
+        <Button Content="Выбрать" Command="{BindCmd Select, Argument={Bind Agents}}" />
+        <Button Content="Отмена" Command="{BindCmd Close}"/>
+    </Dialog.Buttons>
+    <CollectionView RunAt="Server" ItemsSource="{Bind Agents}" Filter="Fragment">
+
+        <Toolbar Style="Transparent">
+            <TextBox Value="{Bind Parent.Filter.Fragment}" Label="Фрагмент названия:" TabIndex="1"
+                     Tip="можно ввести до трех фрагментов наименования (через пробел)">
+                <TextBox.AddOns>
+                    <Hyperlink Icon="Search" Command="{BindCmd Reload}"/>
+                </TextBox.AddOns>
+            </TextBox>
+            <!--Command="[[vm.$addDialog({dialog:'editAgent', array: vm.Agents, context: {Fragment:vm.$query.Fragment}})]]" 
+                            Command="[[vm.$editDialog(vm.Agents.$selected, 'editAgent')]]"
+            -->
+            <Button Toolbar.Align="Right" Content="Создать" Icon="Add" />
+            <Button Toolbar.Align="Right" Content="Изменить" Icon="Edit" 
+                   Command="{BindCmd Dialog, Action=EditSelected, Url='/Agent/editAgent', Argument={Bind Parent.ItemsSource}}"
+                />
+        </Toolbar>
+        <DataGrid ItemsSource="{Bind Agents}"  FixedHeader="True" Height="450"
+			  Hover="True" Striped="True" GridLines="Vertical" Margin="5, 0"
+			  DoubleClick="{BindCmd Select, Argument={Bind Parent.ItemsSource}}">
+            <DataGridColumn Content="{Bind Id}" Header="Код" Fit="True"/>
+            <DataGridColumn Content="{Bind Name}" Header="Наименование"/>
+            <DataGridColumn Content="{Bind Code}" Header="Код ОКПО" Fit="True"/>
+            <DataGridColumn Content="{Bind Memo}" Header="Примечание"/>
+        </DataGrid>
+        <Pager Source="{Bind Parent.Pager}"></Pager>
+    </CollectionView>
+</Dialog>

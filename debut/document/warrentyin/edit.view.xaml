@@ -1,0 +1,95 @@
+<Page xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml">
+    <Page.Toolbar>
+        <Toolbar>
+            <Button Icon="Save" Tip="Сохранить изменения" Command="{BindCmd Save}">Сохранить</Button>
+            <Button Icon="SaveClose" Tip="Сохранить изменения и закрыть документ" Command="{BindCmd SaveAndClose}">Сохранить и закрыть</Button>
+            <Button Icon="Reload" Command="{BindCmd Reload}" Tip="Обновить данные">Обновить</Button>
+            <Separator />
+            <Button Icon="GearOutline" Content="Провести" Tip="Провести документ и создать отгрузку в Акценте"
+                    Command="{BindCmd Execute, CommandName=apply, Argument={Bind Document}, SaveRequired=True}"
+                    If="{Bind Document.$ApplyVisible}"/>
+            <Button Icon="Ban" Content="Отменить проведение" Tip="Отменить проведение и удалить счёт-фактуру в Акценте"
+                    Command="{BindCmd Execute, CommandName=unapply, Argument={Bind Document}}"
+                    If="{Bind Document.Done}"
+                    Disabled="{Bind Document.HasLinkDocs}"/>
+            <Separator />
+            <Button Icon="Close" Toolbar.Align="Right"
+                    Command="{BindCmd Close}">Закрыть</Button>
+        </Toolbar>
+    </Page.Toolbar>
+    <Page.Taskpad>
+        <Taskpad Width="300">
+            <Panel Icon="InfoOutline" Padding="0, 6" Header="{Bind Document.Id, Format='Информация о документе [{0}]'}"
+                   Collapsible="True" Style="Info">
+                <PropertyGrid GridLines="Horizontal" Compact="True">
+                    <PropertyGridItem Name="Создан" Content="{Bind Document.D_CREATED, DataType=DateTime}"/>
+                    <PropertyGridItem Name="Изменён" Content="{Bind Document.D_MODIFIED, DataType=DateTime}"/>
+                    <PropertyGridItem Name="Сумма" Content="{Bind Document.Sum, DataType=Currency}" Bold="True"/>
+                </PropertyGrid>
+            </Panel>
+            <!--<Panel Icon="Link" Header="Основание" Collapsible="True" Style="Yellow" Padding="6">
+                --><!--<Hyperlink Icon="FileLink" Content="{Bind Document.ParentDoc.$Name}" Command="{BindCmd Open, Url='/Document/Request/Edit', Argument={Bind Document.ParentDoc}}"/>--><!--
+            </Panel>
+            <Panel Icon="Upload" Header="Возвраты" Collapsible="True" Style="Danger" If="{Bind Document.Done}">
+
+            </Panel>-->
+            <Panel Style="Yellow" Padding="0, 6, 6, 6"
+                   Header="Отгрузки" Icon="Upload" Collapsible="True"
+                   If="{Bind Document.Done}">
+                <!--<Repeater ItemsSource="{Bind Document.Shipment}">-->
+                    <StackPanel>
+                        <!--<Header Content="{Bind Warehouse.Name}" Size="Mini"/>-->
+                        <!--<Table ItemsSource="{Bind LinkedDocuments}"-->
+                        <Table ItemsSource="{Bind Document.Shipment}"
+                               Compact="True" Width="100%" Border="True" GridLines="Both">
+                            <Table.Header>
+                                <TableRow>
+                                    <TableCell>Дата</TableCell>
+                                    <TableCell>Номер</TableCell>
+                                    <TableCell>Сумма</TableCell>
+                                </TableRow>
+                            </Table.Header>
+                            <TableRow>
+                                <TableCell Align="Center">
+                                    <Hyperlink Content="{Bind Date, DataType=Date}" 
+                                       Command="{BindCmd Command=Open, Url='/Document/Shipment/Edit', Argument={Bind Id}}"/>
+                                </TableCell>
+                                <TableCell Content="{Bind SNo}" />
+                                <TableCell Content="{Bind Sum, DataType=Currency}" Align="Right"/>
+                            </TableRow>
+                        </Table>
+                        <!--<Hyperlink Icon="Plus" Content="Создать документ" Margin="6, 0" Size="Small"
+                                   Command="{BindCmd Execute, CommandName=createShipment, Argument={Bind Warehouse}, SaveRequired=True}"
+                                   If="{Bind HasRem}"/>-->
+                    </StackPanel>
+                <!--</Repeater>-->
+            </Panel>
+        </Taskpad>
+    </Page.Taskpad>
+    <Grid Columns="150, 150, 150, 200, 1*">
+        <Header Grid.Row="1" Grid.Col="1" Size="Medium">Доверенность входящая</Header>
+        <!--<Header Grid.Row="1" Grid.Col="2" Badge="{Bind Document.Id}"></Header>-->
+
+        <DatePicker Grid.Row="2" Grid.Col="1" Label="Дата" Value="{Bind Document.Date}"/>
+        <DatePicker Grid.Row="2" Grid.Col="2" Label="Дата до" Value="{Bind Document.DateTo}"/>
+        <Static Grid.Row="2" Grid.Col="3" Label="Код" Value="{Bind Document.Id}" Align="Right"/>
+        <TextBox Grid.Row="3" Label="На сумму" Value="{Bind Document.Sum}" Align="Right"/>
+        <TextBox Grid.Row="3" Label="Номер" Value="{Bind Document.No}" Align="Right"/>
+        <!--<TextBox Grid.Row="4" Grid.ColSpan="3" Label="Покупатель" Value="{Bind Document.Agent.Name}" ValidateValue="{Bind Document.Agent}">
+            <TextBox.AddOns>
+                <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/Agent/BrowseAgent', Argument={Bind Document.Agent}}"/>
+            </TextBox.AddOns>
+        </TextBox>-->
+        <Selector Grid.Row="4" Grid.ColSpan="3" Label="Покупатель" DisplayProperty="Name" Value="{Bind Document.Agent}"  ValidateValue="{Bind Document.Agent}" Delegate="FetchAgents">
+            <Selector.AddOns>
+                <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/Agent/BrowseAgent', Argument={Bind Document.Agent}}"/>
+            </Selector.AddOns>
+        </Selector>
+        <ComboBox Grid.Row="5" Grid.ColSpan="3" Label="Продавец" Value="{Bind Document.Company}" ItemsSource="{Bind Companies}"/>
+        <TextBox Grid.Row="6" Grid.ColSpan="4" Label="Через кого" Value="{Bind Document.Throughwhom}" Align="Left"/>
+        <TextBox Grid.Row="7" Grid.ColSpan="4" Label="Примечание" Multiline="True"
+                 Value="{Bind Document.Memo}" Rows="3"/>
+    </Grid>
+</Page>
+
+    

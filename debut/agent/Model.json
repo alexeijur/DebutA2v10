@@ -1,0 +1,24 @@
+﻿{
+  "schema": "a2v10",
+  "model": "Sales.Request.Agent",
+  "dialogs": {
+    "browseAgent": {
+      "view": "browseAgent.dialog",
+      "index": true
+    },
+    "editAgent": {
+      "view": "editAgent.dialog",
+      "template": "agent.template"
+    },
+    "browseAgentPerson": {
+      "view": "browseAgentPerson.dialog",
+      "index": true
+    }
+  },
+  "commands": {
+    "getAgentSelector": {
+      "type": "sql",
+      "procedure": "getAgentSelect"
+    }
+  }
+}

@@ -1,0 +1,684 @@
+﻿<Page xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml">
+    <Page.Toolbar>
+        <Toolbar>
+            <Button Icon="Save" Command="{BindCmd Save}" Content="Сохранить"/>
+            <Button Icon="Save" Command="{BindCmd SaveAndClose}"
+					Content="Сохранить и Закрыть" />
+            <Button Icon="Refresh" Content="Обновить" Command="{BindCmd Reload}" />
+            <Separator />
+            <Button Icon="GearOutline" Content="Провести" Tip="Провести документ и создать счёт-фактуру в Акценте"
+                    Command="{BindCmd Execute, CommandName=apply, Argument={Bind Document}}"
+                    If="{Bind !Document.Done}"/>
+            <Button Icon="Ban" Content="Отменить проведение" Tip="Отменить проведение и удалить счёт-фактуру в Акценте"
+                    Command="{BindCmd Execute, CommandName=unapply, Argument={Bind Document}}"
+                    If="{Bind Document.Done}"
+                    Disabled="{Bind Document.HasLinkDocs}"/>
+            <!--TODO
+            <Button Icon="GearOutline" Content="Провести" Command="[[vm.$exec('applyRequest', Document)]]" 
+                    Tip="Провести документ и создать счёт-фактуру в Акценте"
+                    Hide="{Bind Document.$applyDisabled}"
+                    Disabled="{Bind Expression='!vm.$form.$valid'}"/>
+            <Button Icon="Edit" Content="отменить проведение" Command="[[vm.$exec('unapplyRequest', Document)]]" 
+                    Tip="Отменить проведение и удалить счёт-фактуру в Акценте"
+                    Hide="{Bind !Document.Done}"
+                    Disabled="{Bind Document.HasLinkDocs}"/>
+            -->
+            <Separator />
+            <Button Icon="Print" Content="Счёт-фактура" Command="{BindCmd Command=Report, Report=invoice, Argument={Bind Document}, SaveRequired=True}" />
+            <Button Icon="Print" Content="Накладная" Command="{BindCmd Report, Report=delidery_note, Argument={Bind Document}, SaveRequired=True}" />
+            <Button Icon="Close" Command="{BindCmd Close}" Content="Закрыть" Toolbar.Align="Right"/>
+        </Toolbar>
+    </Page.Toolbar>
+    <Page.Taskpad>
+        <Taskpad Width="300">
+            <Panel Icon="InfoOutline" Header="{Bind Document.Contract.Id, Format='Условия сделки [{0}]'}" Padding="0, 6"
+                   Collapsible="True" Style="Info">
+                <TextBox Label="Условия работы с покупателем" Value="{Bind Document.Contract.FullName}">
+                    <TextBox.AddOns>
+                        <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/Contract/BrowseContract', Argument={Bind Document.Contract}, Data={Bind Document.$BrowseContractData}}" />
+                        <Hyperlink Icon="Edit" Command="{BindCmd Dialog, Action=Edit, Url='/Contract/EditContract', Argument={Bind Document.Contract}}"
+                                   If="{Bind Document.$HasContract}" />
+                        <Hyperlink Icon="Clear" Command="{BindCmd Clear, Argument={Bind Document.Contract}}"/>
+                    </TextBox.AddOns>
+                </TextBox>
+                <PropertyGrid GridLines="Horizontal" Wrap="NoWrap" Compact="True">
+                    <PropertyGridItem Name="Форма оплаты">
+                        <ComboBox ItemsSource="{Bind PayForms}" 
+                                  Value="{Bind Document.PayForm}"
+                                  Disabled="{Bind Document.$HasContract}"/>
+                    </PropertyGridItem>
+                    <PropertyGridItem Name="Условия оплаты" Content="{Bind Document.PayTerm.Name}"/>
+                    <PropertyGridItem Name="Вид цены" Content="{Bind Document.PriceKind.Name}" />
+                    <PropertyGridItem Name="Налоги">
+                        <Text>
+                            НДС:
+                            <Span Bold="True" Content="{Bind Document.$Taxes.Vat}"/> %
+                            <Break/>
+                            Прибыль:
+                            <Span Bold="True" Content="{Bind Document.$Taxes.Profit}"/> %
+                            <Break/>
+                            Оборот:
+                            <Span Bold="True" Content="{Bind Document.$Taxes.Sale}"/> %
+                        </Text>
+                    </PropertyGridItem>
+                </PropertyGrid>
+
+            </Panel>
+            <Panel Icon="InfoOutline" Padding="0, 6" Header="{Bind Document.Id, Format='Информация о заказе [{0}]'}"
+                   Collapsible="True" Style="{Bind Document.$MarginStyle}">
+                <PropertyGrid GridLines="Horizontal" Compact="True">
+                    <PropertyGridItem Name="Создан" Content="{Bind Document.DateCreated, DataType=DateTime}"/>
+                    <PropertyGridItem Name="Изменён" Content="{Bind Document.DateModified, DataType=DateTime}"/>
+                    <PropertyGridItem Name="Итого">
+                        <Text>
+                            <Span Content="{Bind Document.TSum, DataType=Currency}" Bold="True"/> &#160;
+                            <Span If="{Bind Document.$HasARows}" Content="{Bind Document.$ASum, DataType=Currency, Format='({0})'}" />
+                        </Text>
+                    </PropertyGridItem>
+                    <PropertyGridItem Content="в том числе:"></PropertyGridItem>
+                    <!--В том числе -->
+                    <PropertyGridItem If="{Bind Document.$TotalDeliverySum}"
+                        Name="Транспорт" Content="{Bind Document.$TotalDeliverySum, DataType=Currency}"/>
+                    <PropertyGridItem
+                        Name="Себестоимость" Content="{Bind Document.$SelfCost, DataType=Currency}"/>
+                    <PropertyGridItem Name="Маржа">
+                        <Text>
+                            <Span Content="{Bind Document.$TotalMargin, DataType=Currency}" Bold="True"/> &#160;
+                            <Span If="{Bind Document.$TotalMarginPrc}" Content="{Bind Document.$TotalMarginPrc, DataType=Currency, Format='({0}%)'}" />
+                        </Text>
+                    </PropertyGridItem>
+                </PropertyGrid>
+            </Panel>
+            <Panel Style="Yellow" Padding="0, 6, 6, 6"
+                   Header="Отгрузки" Icon="Upload" Collapsible="True"
+                   If="{Bind Document.Done}">
+                <Repeater ItemsSource="{Bind Document.$Shipment}">
+                    <StackPanel>
+                        <Header Content="{Bind Warehouse.Name}" Size="Mini"/>
+                        <Table ItemsSource="{Bind LinkedDocuments}" 
+                               Compact="True" Width="100%" Border="True" GridLines="Both">
+                            <Table.Header>
+                                <TableRow>
+                                    <TableCell>Дата</TableCell>
+                                    <TableCell>Номер</TableCell>
+                                    <TableCell>Сумма</TableCell>
+                                </TableRow>
+                            </Table.Header>
+                            <TableRow>
+                                <TableCell Align="Center">
+                                    <Hyperlink Content="{Bind Date, DataType=Date}" 
+                                       Command="{BindCmd Command=Open, Url='/Document/Shipment/Edit', Argument={Bind Id}}"/>
+                                </TableCell>
+                                <TableCell Content="{Bind SNo}" />
+                                <TableCell Content="{Bind Sum, DataType=Currency}" Align="Right"/>
+                            </TableRow>
+                            <Table.Footer>
+                                <TableRow>
+                                    <TableCell ColSpan="2">Итого</TableCell>
+                                    <TableCell Bold="True" Align="Right" Content="{Bind TotalSum, DataType=Currency}" />
+                                </TableRow>
+                                <TableRow If="{Bind HasRem}">
+                                    <TableCell ColSpan="2">Остаток</TableCell>
+                                    <TableCell Bold="True"  Align="Right" Content="{Bind TotalRem, DataType=Currency}" />
+                                </TableRow>
+                            </Table.Footer>
+                        </Table>
+                        <Hyperlink Icon="Plus" Content="Создать документ" Margin="6, 0" Size="Small"
+                                   Command="{BindCmd Execute, CommandName=createShipment, Argument={Bind Warehouse}, SaveRequired=True}"
+                                   If="{Bind HasRem}"/>
+                        <!--
+                        <Line />
+                        -->
+                    </StackPanel>
+                </Repeater>
+            </Panel>
+            <Panel Icon="InfoOutline" Header="Бонусы" If="{Bind Document.$HasBonus}"
+                   Collapsible="True" Style="Yellow" Padding="0, 6">
+                <Table GridLines="Horizontal">
+                    <TableRow If="{Bind Document.$HasERows}">
+                        <TableCell ColSpan="2">Превышение</TableCell>
+                    </TableRow>
+                    <TableRow If="{Bind Document.$HasERows}">
+                        <Text Size="Small" Wrap="NoWrap">
+                            <Span Bold="True" Content="{Bind Document.ERows[0].CashSum, DataType=Currency}"/>
+                            (
+                            <Span Bold="True" Content="{Bind Document.ERows[0].Percent, DataType=Number}"/> %)
+                        </Text>
+                        <TextBox Value="{Bind Document.ERows[0].Person.Name}">
+                            <TextBox.AddOns>
+                                <Hyperlink Icon="Search" Command="{BindCmd Execute, CommandName=browseBonusEPerson, Argument={Bind Document}}"/>
+                                <Hyperlink Icon="Close" Command="{BindCmd Execute, CommandName=clearBonusEPerson, Argument={Bind Document}}"/>
+                            </TextBox.AddOns>
+                        </TextBox>
+                    </TableRow>
+                    <TableRow If="{Bind Document.$HasPRow0}">
+                        <TableCell ColSpan="2">Персоналка</TableCell>
+                    </TableRow>
+                    <TableRow If="{Bind Document.$HasPRow0}">
+                        <Text Wrap="NoWrap">
+                            <Span Bold="True"  Content="{Bind Document.$PRows0Sum, DataType=Currency}" />
+                            (
+                            <Span Bold="True" Content="{Bind Document.$PRows0Percent, DataType=Number}"/> %)
+                        </Text>
+                        <TableCell Content="{Bind Document.$PRows0PersonName}" />
+                    </TableRow>
+                    <TableRow If="{Bind Document.$HasPRow1}">
+                        <Text Wrap="NoWrap">
+                            <Span Bold="True" Content="{Bind Document.$PRows1Sum, DataType=Currency}" />
+                            (
+                            <Span Bold="True"  Content="{Bind Document.$PRows1Percent, DataType=Number}"/> %)
+                        </Text>
+                        <TableCell Content="{Bind Document.$PRows1PersonName}" />
+                    </TableRow>
+                </Table>
+            </Panel>
+        </Taskpad>
+    </Page.Taskpad>
+    <TabPanel FullPage="True">
+        <Tab Header="Товар со склада" Badge="{Bind Document.Rows.Count}">
+            <Grid Columns="4*, 0.2*, 1*, 0.2*, 2*">
+                <Header Grid.Row="1" Size="Medium" Badge="{Bind Document.State}">Заказ на продажу</Header>
+                <TextBox Grid.Row="1" Grid.Col="3" Label="Номер" Value="{Bind Document.SNo}" />
+                <TextBox Grid.Row="1" Grid.Col="5" Label="Доставка (сумма без НДС)" Tip="Стоимость доставки" Align="Right"
+                         Value="{Bind Document.$SRows0Sum}" Disabled="True"/>
+                <Selector Grid.Row="2" Label="Покупатель" DisplayProperty="Name" Value="{Bind Document.Agent}" Delegate="FetchAgents">
+                    <Selector.AddOns>
+                        <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/Agent/BrowseAgent', Argument={Bind Document.Agent}}"/>
+                    </Selector.AddOns>
+                </Selector>
+                <DatePicker Grid.Row="2" Grid.Col="3" Label="Дата" Value="{Bind Document.Date}"/>
+                <ComboBox Grid.Row="2" Grid.Col="5" Label="Доставку включить"
+                                  Value="{Bind Document.SRows[0].RelationType, DataType=Number}">
+                    <ComboBoxItem Value="0">В итоги по документу</ComboBoxItem>
+                    <ComboBoxItem Value="1">В себестоимость товара</ComboBoxItem>
+                    <ComboBoxItem Value="2">В цену покупателя</ComboBoxItem>
+                </ComboBox>
+
+                <ComboBox Grid.Row="3" Label="Продавец"
+                                  Value="{Bind Document.Company}"
+                                  ItemsSource="{Bind Companies}"
+                                  Disabled="{Bind Document.$HasContract}"/>
+                <TextBox Grid.Row="3" Grid.Col="3" Grid.ColSpan="3" Label="Адрес доставки" Tip="Укажите полный адрес,по которому нужно доставить товар"
+                                 Value="{Bind Document.SRows[0].Memo}"/>
+
+                <Block Grid.Row="4" Grid.ColSpan="5">
+                    <Toolbar Style="Transparent">
+                        <Button Icon="Add" Content="Добавить строку" Command="{BindCmd Append, Argument={Bind Document.Rows}}"/>
+
+                        <Button Icon="Download" Content="Подбор товара" Disabled="{Bind Root.$readOnly}"
+                                Command="{BindCmd Dialog, Action=Show, Url='/Document/Request/entityChoice', Argument={Bind Document.Contract.Id}}"/>
+                        <CheckBox Label="Цена закупки без НДС" Value="{Bind Document.VatPurchases}"/>
+                        <Button Icon="ArrowSort" Content="Сортировать товар" Command="{BindCmd Execute, CommandName=sortRows, Argument={Bind Document.Rows}}"/>
+                        <Popover Icon="Download" Text="Установить цены" Background="Yellow" Hide="{Bind Root.$readOnly}" Toolbar.Align="Right" Placement="BottomLeft">
+                            <DataGrid ItemsSource="{Bind PriceKinds}" Compact="True"
+                                GridLines="Both" HeadersVisibility="None" Hover="True" Striped="True">
+                                <DataGridColumn Content="{Bind Name}" Wrap="NoWrap"/>
+                            </DataGrid>
+                        </Popover>
+                    </Toolbar>
+                    <Table ItemsSource="{Bind Document.Rows}" GridLines="Both" Border="True" 
+                           Columns="Fit,80,Auto,Fit,70,Fit,Fit,Fit,60,Fit,Fit,Fit,130,Fit" Background="Paper">
+                        <Table.Header >
+                            <TableRow>
+                                <TableCell RowSpan="2">#</TableCell>
+                                <TableCell ColSpan="2">Товар</TableCell>
+                                <TableCell>Ед. изм.</TableCell>
+                                <TableCell RowSpan="2" Wrap="NoWrap">Кол-во</TableCell>
+                                <TableCell RowSpan="2">Цена\nзакупки</TableCell>
+                                <TableCell RowSpan="2">Себест.\nединицы</TableCell>
+                                <TableCell RowSpan="2">Жел. %</TableCell>
+                                <TableCell>Цена</TableCell>
+                                <TableCell RowSpan="2">Цена\nдок-та</TableCell>
+                                <TableCell RowSpan="2">Сумма</TableCell>
+                                <TableCell RowSpan="2">Доcт.</TableCell>
+                                <TableCell RowSpan="2">Склад</TableCell>
+                                <TableCell RowSpan="2"/>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell ColSpan="2">ПНТ</TableCell>
+                                <TableCell>произв.</TableCell>
+                                <TableCell>произв.</TableCell>
+                            </TableRow>
+                        </Table.Header>
+                        <TableRow>
+                            <TableCell RowSpan="2" Content="{Bind RowNo}" Align="Right"/>
+                            <TableCell ColSpan="2">
+                                <Selector DisplayProperty="Name" Value="{Bind Entity}" ValidateValue="{Bind Entity}" Tip="{Bind Entity.Name}" Delegate="FetchEntity">
+                                    <Selector.AddOns>
+                                        <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/Entity/BrowseEntity', Argument={Bind Entity}}"/>
+                                    </Selector.AddOns>
+                                </Selector>
+                            </TableCell>
+                            <Static Value="{Bind Unit.Name}" Align="Center"/>
+                            <!--кол-во-->
+                            <TextBox Value="{Bind Qty}" Align="Right" Tip="{Bind $Rem}"/>
+                            <!--<TextBox Value="{Bind Qty}" Align="Right"/>-->
+                            <!--цена закупки-->
+                            <TextBox Value="{Bind PurchasePrice, DataType=Currency}" Align="Right">
+                                <TextBox.AddOns>
+                                    <Hyperlink If="{Bind $HasEntity}" Icon="InfoOutline" 
+                                               Command="{BindCmd Execute, CommandName=showEntityInfo, Argument={Bind}}"/>
+                                </TextBox.AddOns>
+                            </TextBox>
+                            <!--себестоимость единицы-->
+                            <Static Value="{Bind $CostPrice, DataType=Currency}" Align="Right">
+                                <Static.AddOns>
+                                    <Popover Icon="InfoOutline" Background="Green" Placement="TopLeft">
+                                        <Popup>
+                                            <PropertyGrid GridLines="Horizontal" Wrap="NoWrap" Compact="True">
+                                                <PropertyGridItem If="{Bind PurchasePrice}"
+                                                    Name="Цена закупки" Content="{Bind PurchasePrice, DataType=Currency}"/>
+                                                <PropertyGridItem If="{Bind $CostTaxProfit}"
+                                                    Name="Налог на прибыль" Content="{Bind $CostTaxProfit, DataType=Currency}"/>
+                                                <PropertyGridItem If="{Bind $CostTaxSale}"
+                                                    Name="Налог с оборота" Content="{Bind $CostTaxSale, DataType=Currency}"/>
+                                                <PropertyGridItem If="{Bind $CostVat}"
+                                                    Name="НДС (невозмещаемый)" Content="{Bind $CostVat, DataType=Currency}"/>
+                                                <PropertyGridItem If="{Bind $CostDelivery}"
+                                                    Name="Доставка" Content="{Bind $CostDelivery, DataType=Currency}"/>
+                                                <PropertyGridItem If="{Bind $BonusPPrice}"
+                                                    Name="«Персоналка»" Content="{Bind $BonusPPrice, DataType=Currency}"/>
+                                                <PropertyGridItem If="{Bind $CostCash}"
+                                                    Name="Обналичивание" Content="{Bind $CostCash, DataType=Currency}"/>
+                                                <PropertyGridItem If="{Bind $LoanCostSum}"
+                                                    Name="% по кредиту" Content="{Bind $LoanCostSum, DataType=Currency}"/>
+                                            </PropertyGrid>
+                                        </Popup>
+                                    </Popover>
+                                </Static.AddOns>
+                            </Static>
+                            <!-- Желаемый процент наценки -->
+                            <TextBox Value="{Bind BaseMarg, DataType=Currency}" Align="Right" />
+                            <!--цена-->
+                            <TextBox Value="{Bind BasePrice, DataType=Currency}" Align="Right">
+                                <TextBox.AddOns>
+                                    <Popover Icon="ArrowSort" If="{Bind Entity.$HasPrices}" Placement="BottomLeft">
+                                        <DataGrid ItemsSource="{Bind Entity.Prices}" GridLines="Both" 
+                                                  Striped="True" Compact="True" HeadersVisibility="None">
+                                            <DataGridColumn Content="{Bind PriceKind.Name}" />
+                                            <DataGridColumn Content="{Bind Price, DataType=Currency}" Align="Right"/>
+                                        </DataGrid>
+                                    </Popover>
+                                </TextBox.AddOns>
+                            </TextBox>
+                            <!--цена док-та-->
+                            <TableCell RowSpan="2" Content="{Bind $Price, DataType=Currency}" Align="Right" />
+                            <!--сумма док-та-->
+                            <TableCell RowSpan="2" Content="{Bind $Sum, DataType=Currency}" Align="Right"/>
+                            <TableCell Align="Center" RowSpan="2">
+                                <!--Disabled="{Bind Expression='vm.Document.$DeliveryType != 2'}"-->
+                                <CheckBox Value="{Bind DeliveryOn}" />
+                            </TableCell>
+                            <TableCell RowSpan="2">
+                                <ComboBox ItemsSource="{Bind Root.Warehouses}" Value="{Bind Warehouse}"/>
+                            </TableCell>
+                            <TableCell RowSpan="2" VAlign="Middle">
+                                <Hyperlink Size="Small" Icon="Delete" Command="{BindCmd Remove, Argument={Bind}, Confirm='Действительно удалить строку?'}" If="{Bind $CanDelete}"/>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell Align="Left">
+                                <TextBox Value="{Bind Entity.$Article}" />
+                            </TableCell>
+                            <TableCell Align="Right">
+                                <Text Wrap="NoWrap" If="{Bind $HasEntity}">
+                                    <Popover Padding="0, 5" Url="{Bind $ReserveUrl}"
+                                             Background="Cyan" Placement="RightBottom" 
+                                             Tip="Показать резерв по товару"
+                                             Icon="History" Text="резерв" />
+                                    <Hyperlink Icon="CommentLines" Command="{BindCmd Dialog, Action=Show,  Url='/Entity/EntityCard', Argument={Bind Entity}}">карточка</Hyperlink>
+                                </Text>
+                            </TableCell>
+                            <ComboBox ItemsSource="{Bind Entity.FUnits}"
+										  If="{Bind $HasFUnits}"
+										  Value="{Bind FUnit}" 
+                                          Tip="{Bind Factor, Format='Коэффициент пересчета: {0}'}"/>
+                            <TextBox Value="{Bind FQty}" Align="Right" If="{Bind $IsFUnit}" />
+                            <Text>(-)
+                                <Span Bold="True" Content="{Bind $PurchasePriceWithoutVAT}"/>
+                            </Text>
+                            <!--себестоимость единицы-->
+                            <Text Wrap="NoWrap">(+)
+                                <Span Bold="True" Content="{Bind $Margin}"/> %
+                            </Text>
+                            <!--цена-->
+                            <Static If="{Bind $IsFUnit}" Value="{Bind $FPrice, DataType=Currency}" Align="Right" />
+                        </TableRow>
+                    </Table>
+                </Block>
+                <TextBox Grid.Row="5" Grid.ColSpan="5" Label="Примечание:" Value="{Bind Document.Memo}" Multiline="True" AutoSize="True"/>
+            </Grid>
+        </Tab>
+        <Tab Header="Товарный бонус">
+            <Table Margin="10" Columns="Fit,Fit,Auto,70,80,80" Background="Rose"
+                   ItemsSource="{Bind Document.Rows}" Border="True" GridLines="Both">
+                <Table.Header>
+                    <TableRow>
+                        <TableCell RowSpan="2">№</TableCell>
+                        <TableCell RowSpan="2">ПНТ</TableCell>
+                        <TableCell RowSpan="2">Товар</TableCell>
+                        <TableCell>Ед. изм.</TableCell>
+                        <TableCell RowSpan="2">Кол-во\nотгружаемое</TableCell>
+                        <TableCell RowSpan="2">Товарный\nбонус</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>произв.</TableCell>
+                    </TableRow>
+                </Table.Header>
+                <TableRow>
+                    <TableCell Content="{Bind RowNo}" Align="Right"/>
+                    <TableCell Content="{Bind Entity.Article}"/>
+                    <TableCell Content="{Bind Entity.Name}"/>
+                    <Group>
+                        <Static Value="{Bind Unit.Name}" Align="Center"/>
+                        <Static If="{Bind $IsFUnit}" Value="{Bind FUnit.Name}" Align="Center"/>
+                    </Group>
+                    <Group>
+                        <Static Value="{Bind Qty1, DataType=Number}" Align="Right"/>
+                        <Static If="{Bind $IsFUnit}" Value="{Bind $FQty1, DataType=Number}" Align="Right"/>
+                    </Group>
+                    <Group>
+                        <TextBox Value="{Bind Qty2, DataType=Number}" Align="Right"/>
+                        <Static If="{Bind $IsFUnit}" Value="{Bind $FQty2, DataType=Number}" Align="Right"/>
+                    </Group>
+                </TableRow>
+            </Table>
+        </Tab>
+        <Tab Header="Бонусы">
+            <Toolbar Style="Transparent">
+                <!--<Button Icon="Download" Content="Заполнить" 
+                        Command="{BindCmd Execute, CommandName=fillEXRows, Argument={Bind Document}, CheckReadOnly=True}"/>-->
+                <Popover Icon="Download" Text="Установить цены" Background="Yellow" Hide="{Bind Root.$readOnly}"
+                         Toolbar.Align="Right" Placement="BottomLeft">
+                    <DataGrid ItemsSource="{Bind PriceKindsEX}" Compact="True"
+                                GridLines="Both" HeadersVisibility="None" Hover="True" Striped="True">
+                        <DataGridColumn Content="{Bind Name}" Wrap="NoWrap"/>
+                    </DataGrid>
+                </Popover>
+            </Toolbar>
+            <Table Margin="10" Columns="Fit,Fit,Auto,70,80,80,80,80,80,80" Background="Rose"
+                   ItemsSource="{Bind Document.Rows}" Border="True" GridLines="Both">
+                <Table.Header>
+                    <TableRow>
+                        <TableCell RowSpan="2">№</TableCell>
+                        <TableCell RowSpan="2">ПНТ</TableCell>
+                        <TableCell RowSpan="2">Товар</TableCell>
+                        <TableCell>Ед. изм.</TableCell>
+                        <TableCell RowSpan="2">Кол-во\nотгружаемое</TableCell>
+                        <TableCell RowSpan="2">Цена\nсклад</TableCell>
+                        <TableCell RowSpan="2">Сумма\nсклад</TableCell>
+                        <!--<TableCell RowSpan="2">Жел. цена \nс превыш.</TableCell>-->
+                        <TableCell RowSpan="2">Цена с\nбонусом</TableCell>
+                        <TableCell RowSpan="2">Сумма с\nбонусом</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>произв.</TableCell>
+                    </TableRow>
+                </Table.Header>
+                <TableRow>
+                    <TableCell Content="{Bind RowNo}" Align="Right"/>
+                    <TableCell Content="{Bind Entity.Article}"/>
+                    <TableCell Content="{Bind Entity.Name}"/>
+                    <Group>
+                        <Static Value="{Bind Unit.Name}" Align="Center"/>
+                        <!--<Static If="{Bind $IsFUnit}" Value="{Bind FUnit.Name}" Align="Center"/>-->
+                    </Group>
+                    <Group>
+                        <Static Value="{Bind Qty1, DataType=Number}" Align="Right"/>
+                        <!--<Static If="{Bind $IsFUnit}" Value="{Bind $FQty1, DataType=Number}" Align="Right"/>-->
+                    </Group>
+                    <Group>
+                        <Static Value="{Bind $Price, DataType=Number}" Align="Right"/>
+                        <!--<Static If="{Bind $IsFUnit}" Value="{Bind $FPrice, DataType=Number}" Align="Right"/>-->
+                    </Group>
+                    <TableCell Content="{Bind $Sum, DataType=Number}" Align="Right"/>
+                    <!--<Group>
+                        <TextBox Value="{Bind Qty2, DataType=Number}" Align="Right"/>
+                        --><!--<Static If="{Bind $IsFUnit}" Value="{Bind $FQty2, DataType=Number}" Align="Right"/>--><!--
+                    </Group>-->
+                    <Group>
+                        <TextBox Value="{Bind $EXPrice, DataType=Currency}" Align="Right">
+                            <TextBox.AddOns>
+                                <Popover Icon="ArrowSort" Placement="BottomLeft" If="{Bind Entity.$HasPrices}">
+                                    <DataGrid HeadersVisibility="None" Hover="True" GridLines="Both"
+                                          Striped="True" ItemsSource="{Bind Entity.PricesEX}" Compact="True">
+                                        <DataGridColumn Content="{Bind PriceKind.Name}" Wrap="NoWrap"/>
+                                        <DataGridColumn Content="{Bind Price, DataType=Currency}" Align="Right"/>
+                                    </DataGrid>
+                                </Popover>
+                            </TextBox.AddOns>
+                        </TextBox>
+                    </Group>
+                    <!--<TableCell Content="{Bind $BPrice, DataType=Number}"/>-->
+                    <!--<TableCell Content="{Bind $EXPrice, DataType=Number}"/>-->
+                    <!--<TableCell Content="{Bind $EXSum, DataType=Number}"/>-->
+                    <TextBox Value="{Bind $EXSum, DataType=Currency}" Align="Right"/>
+                </TableRow>
+            </Table>
+            <!--<Table ItemsSource="{Bind Document.EXRows}"  Columns="Fit,Auto,70,80,80,80,Fit" Border="True"
+                   GridLines="Both" Margin="0, 0, 10, 0" Background="Paper">
+                <Table.Header>
+                    <TableRow>
+                        <TableCell RowSpan="2">№</TableCell>
+                        <TableCell>Товар</TableCell>
+                        <TableCell>Ед. изм.</TableCell>
+                        <TableCell>Кол-во.</TableCell>
+                        <TableCell>Цена.</TableCell>
+                        <TableCell RowSpan="2">Сумма</TableCell>
+                        <TableCell RowSpan="2" />
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>ПНТ</TableCell>
+                        <TableCell>произв.</TableCell>
+                        <TableCell>произв.</TableCell>
+                        <TableCell>произв.</TableCell>
+                    </TableRow>
+                </Table.Header>
+                <TableRow>
+                    <TableCell RowSpan="2" Content="{Bind RowNo}" Align="Right"/>
+                    --><!--<Selector DisplayProperty="Name" Value="{Bind Entity}" Delegate="FetchEntity">
+                        <Selector.AddOns>
+                            <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/Entity/BrowseEntity', Argument={Bind Entity}}"/>
+                        </Selector.AddOns>
+                    </Selector>--><!--
+                    <Static Value="{Bind Entity.Name}" Align="Left"/>
+                    <Static Value="{Bind Unit.Name}" Align="Center"/>
+                    --><!--<TextBox Value="{Bind Qty}" Align="Right"/>--><!--
+                    <Static Value="{Bind Qty}" Align="Right"/>
+                    <TextBox Value="{Bind $Price, DataType=Currency}" Align="Right">
+                        <TextBox.AddOns>
+                            <Popover Icon="ArrowSort" Placement="BottomLeft" If="{Bind Entity.$HasPrices}">
+                                <DataGrid HeadersVisibility="None" Hover="True" GridLines="Both"
+                                          Striped="True" ItemsSource="{Bind Entity.Prices}" Compact="True">
+                                    <DataGridColumn Content="{Bind PriceKind.Name}" Wrap="NoWrap"/>
+                                    <DataGridColumn Content="{Bind Price, DataType=Currency}" Align="Right"/>
+                                </DataGrid>
+                            </Popover>
+                        </TextBox.AddOns>
+                    </TextBox>
+                    <TableCell RowSpan="2">
+                        <TextBox Value="{Bind $Sum, DataType=Currency}" Align="Right" />
+                    </TableCell>
+                    --><!--<TableCell RowSpan="2" VAlign="Middle">
+                        <Hyperlink Size="Small" Icon="Delete" Command="{BindCmd Remove, Argument={Bind}, Confirm='Действительно удалить строку?'}" If="{Bind $CanDelete}"/>
+                    </TableCell>-->
+            <!--</TableRow>
+                <TableRow>
+                    <Text If="{Bind $HasEntity}">ПНТ:
+                        <Span Content="{Bind Entity.Article}" Bold="True"/>
+                    </Text>
+                    <ComboBox 
+                        ItemsSource="{Bind Entity.FUnits}" If="{Bind $HasFUnits}" 
+                        Value="{Bind FUnit}" Tip="{Bind Factor, Format='Коэффициент пересчета: {0}'}"/>
+                    <TextBox Value="{Bind FQty}" Align="Right" If="{Bind $IsFUnit}"/>
+                    <Static Value="{Bind FPrice}" Align="Right" If="{Bind $IsFUnit}"/>
+                </TableRow>
+            </Table>-->
+            <Grid Columns="150, 150, 150, 150">
+                <Static Grid.Row="1" Grid.Col="1" Label="Итого товар со склада:" Align="Right"
+                        Value="{Bind Document.$RSum, DataType=Currency}"/>
+                <TextBox Grid.Row="1" Grid.Col="2" Label="Превышение:" Align="Right"
+                        Value="{Bind Document.$ERows0Sum, DataType=Currency}" />
+                <Static Grid.Row="1" Grid.Col="3" Label="Итого с бонусом:" Align="Right"
+                        Value="{Bind Document.$EXSum, DataType=Currency}"/>
+                <TextBox Grid.Row="1" Grid.Col="4" Label="Желаемая сумма по счёту:" Align="Right" 
+                        Value="{Bind Document.$AHandSum, DataType=Currency}" Disabled="False"/>
+            </Grid>
+            <!--<Code Content="{Bind Root.$$newComment}"/>-->
+        </Tab>
+        <Tab Header="Товар в счёте-фактуре" Padding="10" Badge="{Bind Document.ARows.Count}" >
+            <!--If="{Bind !Document.$HasNoVat}"-->
+            <Toolbar Style="Transparent">
+                <Button Icon="Download" Content="Заполнить" 
+                        Command="{BindCmd Execute, CommandName=fillARows, Argument={Bind Document}, CheckReadOnly=True}"/>
+                <Button Icon="Add" Content="Добавить строку" If="{Bind Document.$HasARows}" Command="{BindCmd Append, Argument={Bind Document.ARows}}" />
+                <Popover Icon="Download" Text="Установить цены" Background="Yellow" Hide="{Bind Root.$readOnly}"
+                         Toolbar.Align="Right" Placement="BottomLeft">
+                    <DataGrid ItemsSource="{Bind PriceKindsA}" Compact="True"
+                                GridLines="Both" HeadersVisibility="None" Hover="True" Striped="True">
+                        <DataGridColumn Content="{Bind Name}" Wrap="NoWrap"/>
+                    </DataGrid>
+                </Popover>
+            </Toolbar>
+            <Table ItemsSource="{Bind Document.ARows}"  Columns="Fit,Auto,70,80,80,80,Fit" Border="True"
+                   GridLines="Both" Margin="0, 0, 10, 0" Background="Paper">
+                <Table.Header>
+                    <TableRow>
+                        <TableCell RowSpan="2">№</TableCell>
+                        <TableCell>Товар</TableCell>
+                        <TableCell>Ед. изм.</TableCell>
+                        <TableCell>Кол-во.</TableCell>
+                        <TableCell>Цена.</TableCell>
+                        <TableCell RowSpan="2">Сумма</TableCell>
+                        <TableCell RowSpan="2" />
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>ПНТ</TableCell>
+                        <TableCell>произв.</TableCell>
+                        <TableCell>произв.</TableCell>
+                        <TableCell>произв.</TableCell>
+                    </TableRow>
+                </Table.Header>
+                <TableRow>
+                    <TableCell RowSpan="2" Content="{Bind RowNo}" Align="Right"/>
+                    <Selector DisplayProperty="Name" Value="{Bind Entity}" Delegate="FetchEntity">
+                        <Selector.AddOns>
+                            <Hyperlink Icon="Search" Command="{BindCmd Dialog, Action=Browse, Url='/Entity/BrowseEntity', Argument={Bind Entity}}"/>
+                        </Selector.AddOns>
+                    </Selector>
+                    <Static Value="{Bind Unit.Name}" Align="Center"/>
+                    <TextBox Value="{Bind Qty}" Align="Right"/>
+                    <TextBox Value="{Bind $Price, DataType=Currency}" Align="Right">
+                        <TextBox.AddOns>
+                            <Popover Icon="ArrowSort" Placement="BottomLeft" If="{Bind Entity.$HasPrices}">
+                                <DataGrid HeadersVisibility="None" Hover="True" GridLines="Both"
+                                          Striped="True" ItemsSource="{Bind Entity.Prices}" Compact="True">
+                                    <DataGridColumn Content="{Bind PriceKind.Name}" Wrap="NoWrap"/>
+                                    <DataGridColumn Content="{Bind Price, DataType=Currency}" Align="Right"/>
+                                </DataGrid>
+                            </Popover>
+                        </TextBox.AddOns>
+                    </TextBox>
+                    <TableCell RowSpan="2">
+                        <TextBox Value="{Bind $Sum, DataType=Currency}" Align="Right" />
+                    </TableCell>
+                    <TableCell RowSpan="2" VAlign="Middle">
+                        <Hyperlink Size="Small" Icon="Delete" Command="{BindCmd Remove, Argument={Bind}, Confirm='Действительно удалить строку?'}" If="{Bind $CanDelete}"/>
+                    </TableCell>
+                </TableRow>
+                <TableRow>
+                    <Text If="{Bind $HasEntity}">ПНТ:
+                        <Span Content="{Bind Entity.Article}" Bold="True"/>
+                    </Text>
+                    <ComboBox 
+                        ItemsSource="{Bind Entity.FUnits}" If="{Bind $HasFUnits}" 
+                        Value="{Bind FUnit}" Tip="{Bind Factor, Format='Коэффициент пересчета: {0}'}"/>
+                    <TextBox Value="{Bind FQty}" Align="Right" If="{Bind $IsFUnit}"/>
+                    <Static Value="{Bind FPrice}" Align="Right" If="{Bind $IsFUnit}"/>
+                </TableRow>
+            </Table>
+            <Grid Columns="150, 150, 150, 150, 150">
+                <Static Grid.Row="1" Grid.Col="1" Label="Итого товар со склада:" Align="Right"
+                        Value="{Bind Document.$RSum, DataType=Currency}"/>
+                <Static Grid.Row="1" Grid.Col="2" Label="Итого по счёту-фактуре:" Align="Right"
+                        Value="{Bind Document.$ASum, DataType=Currency}"/>
+            </Grid>
+            <!--<Text>
+                Итого товар:
+                <Span Bold="True" Content="{Bind Document.$RSum, DataType=Currency}" Margin="0,20,0,0"/>
+                Превышение:
+                <Span Bold="True" Content="{Bind Document.$ERows0Sum, DataType=Currency}" Margin="0,20,0,0"/>
+                Итого счёт-фактура:
+                <Span Bold="True" Content="{Bind Document.$ASum, DataType=Currency}" />
+            </Text>-->
+        </Tab>
+        <Tab Header="Доставка" If="True">
+            <Grid Rows="Auto" Columns="130, 450, 1*, Auto">
+                <TextBox Label="Стоимость (без НДС)" Align="Right"  Tip="Стоимость доставки"
+                                 Value="{Bind Document.SRows[0].Sum, DataType=Currency}"/>
+                <TextBox Label="Адрес доставки" Grid.Col="2" Tip="Укажите полный адрес,по которому нужно доставить товар"
+                                 Value="{Bind Document.SRows[0].Memo}" Disabled="True"/>
+                <Text Grid.Row="1" Grid.Col="4">Всего масса товара:
+                    <Span Bold="True" Content="{Bind Document.Weight, DataType=Number}"/>
+                    кг.
+                </Text>
+            </Grid>
+            <Table Grid.Row="3" Grid.ColSpan="3" ItemsSource="{Bind Document.Rows}" Margin="0 10"
+                   Background="Yellow"
+                   Border="True" GridLines="Both" Columns="Fit,Auto,Auto,Fit,Fit,Fit,Fit,Fit,Auto">
+                <Table.Header>
+                    <TableRow>
+                        <TableCell>№</TableCell>
+                        <TableCell>ПНТ</TableCell>
+                        <TableCell>Товар</TableCell>
+                        <TableCell>Ед.\nизм.</TableCell>
+                        <TableCell>Кол-во\nв упаковке</TableCell>
+                        <TableCell>Масса\nединицы</TableCell>
+                        <TableCell>Кол-во</TableCell>
+                        <TableCell>Масса\nтовара</TableCell>
+                        <TableCell>Склад</TableCell>
+                    </TableRow>
+                </Table.Header>
+                <TableRow>
+                    <TableCell Content="{Bind RowNo}" Align="Right"/>
+                    <TableCell Content="{Bind Entity.Article}" Align="Right"/>
+                    <Text>
+                        <Hyperlink If="{Bind $HasEntity}" Icon="CommentLines" Tip="Карточка товара" Padding="0,6,0,0" 
+                               Command="{BindCmd Dialog, Action=Show, Url='/Entity/entityCard', Argument={Bind Entity}}"/>
+                        <Span Content="{Bind Entity.Name}"/>
+                    </Text>
+                    <TableCell Content="{Bind Unit.Name}" Align="Center"/>
+                    <TableCell Content="{Bind Entity.Pack}" Align="Right"/>
+                    <TableCell Content="{Bind Entity.Weight, DataType=Number}" Align="Right"/>
+                    <TableCell Content="{Bind Qty, DataType=Number}" Align="Right"/>
+                    <TableCell Content="{Bind $Weight, DataType=Number}" Align="Right"/>
+                    <TableCell Content="{Bind Warehouse.Name}" Wrap="NoWrap"/>
+                </TableRow>
+            </Table>
+        </Tab>
+        <Tab Header="Коментарии" If="True" Badge="{Bind Comments.Count}">
+            <Grid Rows="Auto" Columns="Auto, Auto, Auto, 1*, Auto">
+                <TextBox Label="Текст коментария" Grid.Col="1" Grid.ColSpan="4" Grid.RowSpan="1" Tip="Укажите коментарий"
+                                 Value="{Bind Root.$$newComment}" Multiline="True" AutoSize="True" Disabled="False" UpdateTrigger="Input"/>
+                <Button Icon="Add" Content="Добавить коментарий" Command="{BindCmd Execute, CommandName=addComment, Argument={Bind Document}}"/>
+            </Grid>
+            <Table Grid.Row="3" Grid.ColSpan="2" ItemsSource="{Bind Comments}" Margin="0 10"
+                   Background="Cyan"
+                   Border="True" GridLines="Both" Columns="Fit,Fit,200" Compact="True">
+                <Table.Header>
+                    <TableRow>
+                        <TableCell>Дата</TableCell>
+                        <TableCell>Кто</TableCell>
+                        <TableCell>Текст коментария</TableCell>
+                    </TableRow>
+                </Table.Header>
+                <TableRow>
+                    <TableCell Content="{Bind Date, DataType=DateTime}" Align="Left" Wrap="NoWrap"/>
+                    <TableCell Content="{Bind User, DataType=String}" Align="Right"/>
+                    <TableCell Content="{Bind Text, DataType=String}" Align="Left" Wrap="Wrap" VAlign="Top"/>
+                </TableRow>
+            </Table>
+            <!--<Code Content="{Bind Root.$$newComment}"/>-->
+        </Tab>
+    </TabPanel>
+</Page>

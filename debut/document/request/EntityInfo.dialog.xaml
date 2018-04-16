@@ -1,0 +1,22 @@
+﻿<Dialog xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml"
+      Title="Последние закупки по товару" Size="Medium"
+      Padding="10"
+    >
+	<Dialog.Buttons>
+        <Button Content="Выбрать" Command="{BindCmd Select, Argument={Bind Entity.Sales}}" />
+        <Button Content="Закрыть" Command="{BindCmd Close}"/>
+	</Dialog.Buttons>
+	<Static Value="{Bind Entity.Name}" Label="Товар"/>
+	<DataGrid Hover="True" Striped="True" Border="True"
+			  Height="350" FixedHeader="True" GridLines="Vertical"
+		      ItemsSource="{Bind Entity.Sales}" DoubleClick="{BindCmd Select, Argument={Bind Entity.Sales}}">
+		<DataGridColumn Content="{Bind Date, DataType=Date}" Header="Дата" Fit="True"/>
+    <DataGridColumn Content="{Bind Price, DataType=Currency}" Header="Цена"
+						Align="Right" Fit="True"/>
+		<DataGridColumn Header="НДС" Align="Center">
+			<CheckBox Value="{Bind Vat}" Disabled="True"/>
+		</DataGridColumn>
+    <DataGridColumn Content="{Bind Supplier}" Header="Поставщик"/>
+    <DataGridColumn Content="{Bind Warehouse}" Header="Склад" Width="85"/>
+  </DataGrid>
+</Dialog>

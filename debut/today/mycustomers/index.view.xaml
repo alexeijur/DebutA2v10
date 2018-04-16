@@ -1,0 +1,178 @@
+﻿<Page xmlns="clr-namespace:A2v10.Xaml;assembly=A2v10.Xaml"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <Page.Resources>
+        <sys:String x:Key="EditContractUrl">/ContractLegal/EditContract</sys:String>
+    </Page.Resources>
+    <Splitter>
+        <CollectionView Splitter.Width="30%" Margin="0, 6px, 0, 0" RunAt="Client" 
+                        ItemsSource="{Bind Agents}" 
+                        Filter="Fragment" 
+                        FilterDelegate="FilterDelegate" PageSize="1000">
+            <Toolbar Style="Transparent">
+                <TextBox Placeholder="Фрагмент имени" Value="{Bind Parent.Filter.Fragment}" Width="calc(100% - 60px)">
+                    <TextBox.AddOns>
+                        <Hyperlink Icon="Search" />
+                    </TextBox.AddOns>
+                </TextBox>
+                <Button Icon="Plus" Tip="Добавить в список ещё одного контрагента" 
+                        Command="{BindCmd Execute, CommandName='AddMyCustomers', Argument={Bind Agents}}"/>
+                <Button Icon="Minus" Tip="Удалить из списка выбранного контрагента" 
+                        Command="{BindCmd Execute, CommandName='DelMyCustomers', Argument={Bind Agents.$selected}, Confirm='Вы действительно хотите удалить выбранного контрагента из списка?'}"
+                        Disabled="{Bind !Agents.IsFavorit}"/>
+			</Toolbar>
+            <List ItemsSource="{Bind Parent.ItemsSource}" 
+                  Absolute="34, 6px, 0, 0" Striped="True"
+                  AutoSelect="FirstItem" Mark="{Bind $Mark}">
+                <ListItem Header="{Bind Name}" >
+                    <Text>Код:
+                        <Span Content="{Bind Id}" Bold="True"/>
+                    </Text>
+                </ListItem>
+		    </List>
+        </CollectionView>
+        <TabPanel FullPage="True">
+            <Tab Header="Заказы" Padding="6, 0">
+                <Toolbar>
+                    <Button Icon="ArrowOpen" Content="Открыть" 
+                            Command="{BindCmd OpenSelected, Argument={Bind Agents.Selected(Requests)}, Url='/Document/Request/Edit'}" />
+                    <Separator />
+                    <Button Icon="Refresh" Content="Обновить"
+                            Command="{BindCmd Reload, Argument={Bind Agents.Selected(Requests)}}"/>
+                </Toolbar>
+                <DataGrid ItemsSource="{Bind Agents.Selected(Requests)}"
+                          GridLines="Vertical" Striped="True" DoubleClick="{BindCmd OpenSelected, Argument={Bind Agents.Selected(Requests)}, Url='/Document/Request/Edit'}">
+                    <DataGridColumn Header="Код" Content="{Bind Id}" Fit="True" Command="{BindCmd Open, Argument={Bind}, Url='/Document/Request/Edit'}"/>
+                    <DataGridColumn Header="Дата" Content="{Bind Date, DataType=Date}" Fit="True" Align="Center"/>
+                    <DataGridColumn Header="Номер" Content="{Bind SNo}" Align="Right"/>
+                    <DataGridColumn Header="Сумма" Align="Right" Content="{Bind Sum, DataType=Currency}" />
+                    <DataGridColumn Header="Примечание" Content="{Bind Memo}"/>
+                    <DataGrid.RowDetails>
+                        <DataGridRowDetails Activate="Cell" Visible="{Bind $HasShipment}">
+                            <StackPanel Orientation="Horizontal">
+                                <Header Size="Mini" Margin="0,5,0,0">Отгрузки:</Header>
+                                <Table Header="Код,Дата,Номер,Сумма,Склад" Compact="True" Striped="True" GridLines="Both" Border="True"
+                                       ItemsSource="{Bind Shipment}">
+                                    <TableRow>
+                                        <TableCell Align="Right">
+                                            <Hyperlink Content="{Bind Id}" Command="{BindCmd Open, Url='/Document/Shipment/Edit', Argument={Bind Id}}"/>
+                                        </TableCell>
+                                        <TableCell Content="{Bind Date, DataType=Date}"/>
+                                        <TableCell Content="{Bind SNo}"/>
+                                        <TableCell Content="{Bind Sum, DataType=Currency}" Align="Right"/>
+                                        <TableCell Content="{Bind Warehouse.Name}"/>
+                                    </TableRow>
+                                </Table>
+                                <Header Size="Mini" Margin="0,5">Оплаты:</Header>
+                            </StackPanel>
+                        </DataGridRowDetails>
+                    </DataGrid.RowDetails>
+                </DataGrid>
+            </Tab>
+            <Tab Header="Документы" Padding="6, 0">
+                <Toolbar>
+                    <!--пока документы Акцента не открываем-->
+                    <Button Icon="ArrowOpen" Content="Открыть" 
+                            Command="{BindCmd OpenSelected, Argument={Bind Agents.Selected(Documents)}, Url='/Document/Request/Edit'}" Disabled="True"/>
+                    <Separator />
+                    <Button Icon="Refresh" Content="Обновить"
+                            Command="{BindCmd Reload, Argument={Bind Agents.Selected(Documents)}}"/>
+                </Toolbar>
+                <DataGrid ItemsSource="{Bind Agents.Selected(Documents)}"
+                          GridLines="Vertical" Striped="True" >
+                    <DataGridColumn Header="Код" Content="{Bind Id}" Fit="True"/>
+                    <DataGridColumn Header="Дата" Content="{Bind Date, DataType=Date}" Fit="True" Align="Center"/>
+                    <DataGridColumn Header="Номер" Content="{Bind SNo}" Align="Right"/>
+                    <DataGridColumn Header="Сумма" Align="Right" Content="{Bind Sum, DataType=Currency}" />
+                    <DataGridColumn Header="Операция" Content="{Bind Name}"/>
+                </DataGrid>
+            </Tab>
+            <Tab Header="Договоры" Padding="6, 0">
+                <Toolbar>
+                    <!--
+                    Disabled="{Bind Expression='vm.$$isContractDisabled(Agents.$selected.Contracts.$selected)'}"/>
+                    -->
+                    <Button Icon="ArrowOpen" Content="Открыть"
+                            Command="{BindCmd Dialog, Action=EditSelected, Argument={Bind Agents.Selected(Contracts)}, Url={StaticResource EditContractUrl}}"/>
+                    <Button Icon="Add" Content="Создать договор"
+                            Command="{BindCmd Dialog, Action=Append, Url={StaticResource EditContractUrl}, Argument={Bind Agents.Selected(Contracts)}}"/>
+                    <Separator />
+                    <Button Icon="Refresh" Content="Обновить"
+                            Command="{BindCmd Reload, Argument={Bind Agents.Selected(Contracts)}}"/>
+                </Toolbar>
+                <DataGrid ItemsSource="{Bind Agents.Selected(Contracts)}"
+                          GridLines="Vertical" Striped="True" RowBold="{Bind IsMain}"
+                          DoubleClick="{BindCmd Dialog, Action=EditSelected, Url={StaticResource EditContractUrl}, Argument={Bind Agents.Selected(Contracts)}}">
+                    <DataGridColumn Header="Код" Content="{Bind Id}" />
+                    <DataGridColumn Header="Предприятие" Content="{Bind CompanyName}" />
+                    <DataGridColumn Header="Дата" Content="{Bind Date, DataType=Date}"/>
+                    <DataGridColumn Header="Номер" Content="{Bind SNo}"/>
+                    <DataGridColumn Header="Вид" Content="{Bind KindName}"/>
+                    <DataGridColumn Header="Примечание" Content="{Bind Memo}" />
+                    <!--<DataGridColumn Fit="True">
+                        <Hyperlink Size="Small" Icon="Edit" Command="{BindCmd Dialog, Action=Edit, Argument={Bind}, Url={StaticResource EditContractUrl}}"/>
+                    </DataGridColumn>-->
+                    <DataGrid.RowDetails>
+                        <DataGridRowDetails Activate="Cell" Visible="{Bind $HasConditions}">
+                            <StackPanel Orientation="Horizontal">
+                                <Header Size="Mini" Margin="0,5,0,0">Условия работы:</Header>
+                                <Table Compact="True" Striped="True" GridLines="Both" Border="True"
+                                       Header="Код,Дата,Форма оплаты,Условия оплаты,Примечание"
+                                       ItemsSource="{Bind ContractConditions}">
+                                    <TableRow>
+                                        <TableCell Align="Right">
+                                            <Hyperlink Content="{Bind Id}" Command="{BindCmd Dialog, Action=Edit, Argument={Bind}, Url='/Contract/EditContract'}"/>
+                                        </TableCell>
+                                        <TableCell Content="{Bind Date, DataType=Date}"/>
+                                        <TableCell Content="{Bind PayForm.Name}"/>
+                                        <TableCell Content="{Bind PayTerm.Name}"/>
+                                        <TableCell Content="{Bind Memo}"/>
+                                    </TableRow>
+                                </Table>
+                            </StackPanel>
+                        </DataGridRowDetails>
+                    </DataGrid.RowDetails>
+                </DataGrid>
+            </Tab>
+            <Tab Header="Отчёты">
+                <List ItemsSource="{Bind Agents.Selected(Reports)}"  Style="TwoColumnsGrid" Padding="6">
+                    <ListItem Icon="FilePreview" Content="{Bind Description}">
+                        <ListItem.Header>
+                            <Hyperlink Content="{Bind Name}" Bold="True"
+                                       Command="{BindCmd Open, Url='/today/MyCustomers/Report', Argument={Bind $RepArg}, NewWindow=True}"/>
+                        </ListItem.Header>
+                    </ListItem>
+                </List>
+            </Tab>
+        </TabPanel>
+        <!--
+		<TabPanel FullPage="True" If="{Bind Agents.$selected}">
+			<Tab Header="Связи" Lazy="True">
+				<Include Source="[['Links']]" FullPage="True"/>
+			</Tab>
+			<Tab Header="Договоры" Lazy="True">
+				<Include Source="[['Contracts']]" FullPage="True"/>
+			</Tab>
+			<Tab Header="Отчеты">
+				<FlexGrid>
+					<Card Icon="ListAlt">
+						<Card.Header>
+							<Hyperlink Content="Отчет номер 1" Command="[[vm.$report('firstReport', {AgentId:vm.Agents.$selected.Id})]]"/>
+						</Card.Header>
+						<Text Small="True" Content="Показывает отчет номер 1 по корреспонденту" />
+					</Card>
+					<Card Icon="ListAlt">
+						<Card.Header>
+							<Hyperlink Content="Отчет номер 2" />
+						</Card.Header>
+						<Text Small="True" Content="Показывает отчет номер 2 по корреспонденту" />
+					</Card>
+				</FlexGrid>
+			</Tab>
+			<Tab Header="События">
+				<Block>События, которые произошли с контрагентом</Block>
+			</Tab>
+		</TabPanel>
+        -->
+	</Splitter>
+</Page>

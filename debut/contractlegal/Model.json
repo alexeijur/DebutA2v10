@@ -1,0 +1,16 @@
+﻿{
+  "schema": "a2v10",
+  "model": "ContractLegal",
+  "dialogs": {
+    "editContract": {
+      "view": "editContract.dialog",
+      "template": "contract.template"
+    },
+    "browseContract": {
+      "index": true,
+      "view": "browseContract.dialog",
+      "model": "Sales.ContractLegal",
+      "template": "browseContract.template"
+    }
+  }
+}

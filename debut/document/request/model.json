@@ -1,0 +1,99 @@
+﻿{
+  "schema": "a2v10",
+  "model": "Sales.Request",
+  "actions": {
+    "index": {
+      "index": true,
+      "view": "index.view",
+      "template":  "index.template"
+    },
+    "edit": {
+      "view": "edit.view",
+      "template": "element.template"
+    },
+    "logist": {
+      "view": "logist.view",
+      "template":  "logist.template"
+    }
+  },
+  "dialogs": {
+    "entityChoice": {
+      "index": true,
+      "view": "entityChoice.dialog",
+      "template": "entityChoice.template",
+      "model": "Sales.Entity.Choice"
+    },
+    "entityInfo": {
+      "view": "entityInfo.dialog",
+      "model": "Sales.LastPurchases"
+    },
+    "browseBonusPers": {
+      "view": "browseBonusPers.dialog",
+      "model": "BonusPersonAgent"
+    }
+  },
+  "popups": {
+    "entityReserve": {
+      "model": "Sales.Entity.Reserve",
+      "view": "entityReserve.popup"
+    }
+  },
+  "commands": {
+    //"getDocNo": {
+    //  "type": "sql",
+    //  "procedure": "NextDocNo"
+    //},
+    "defaultContract": {
+      "type": "sql",
+      "procedure": "AgentDefContract"
+    },
+    "getEntitySelfCostServer": {
+      "type": "sql",
+      "procedure": "EntitySelfCost"
+    },
+    "getEntityQtyRemServer": {
+      "type": "sql",
+      "procedure": "EntityQtyRem"
+    },
+    "getEntitybyArticle": {
+      "type": "sql",
+      "procedure": "getEntitybyArticle"
+
+    },
+    "sendToLogist": {
+      "type": "startProcess",
+      "file": "Workflows/Logist_v1"
+    },
+    "resumeLogist": {
+      "type": "resumeProcess"
+    },
+    "apply": {
+      "type": "sql",
+      "procedure": "Sales.Request.Apply"
+    },
+    "unapply": {
+      "type": "sql",
+      "procedure": "Document.UnApply"
+    },
+    "createShipment": {
+      "type": "sql",
+      "procedure": "CreateShipment"
+    },
+    "addToComments": {
+      "type": "sql",
+      "procedure": "addToComments"
+    }
+    //"setState": {
+    //  "type": "sql",
+    //  "procedure": "Document.SetState"
+    //}
+  },
+  "reports": {
+    "invoice": {
+      "report": "invoice_UA"
+    },
+    "delidery_note": {
+      "report": "../shipment/delivery_note_UA"
+    }
+  }
+}

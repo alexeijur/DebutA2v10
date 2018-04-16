@@ -1,0 +1,39 @@
+﻿{
+  "schema": "a2v10",
+  "model": "Sales.warrentyout",
+  "actions": {
+    "index": {
+      "index": true,
+      "view": "index.view"
+      //,
+      //"template": "index.template"
+    },
+    "edit": {
+      "view": "edit.view",
+      "template": "warrentyout.template"
+    }
+  },
+  "dialogs": {
+    "entityChoice": {
+      "index": true,
+      "view": "entityChoice.dialog",
+      "template": "entityChoice.template",
+      "model": "Sales.Entity.Choice"
+    }
+  }
+  //,
+  //"commands": {
+  //  "nextDocNo": {
+  //    "type": "sql",
+  //    "procedure": "NextDocNo"
+  //  },
+  //  "apply": {
+  //    "type": "sql",
+  //    "procedure": "Document.Apply"
+  //  },
+  //  "unApply": {
+  //    "type": "sql",
+  //    "procedure": "Document.UnApply"
+  //  }
+  //}
+  }
